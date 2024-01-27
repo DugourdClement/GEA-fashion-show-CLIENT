@@ -12,12 +12,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useNavigate} from "react-router-dom";
 
 const navigationItems = [
-    {path: "/Accueil", label: "Accueil"},
-    {path: "/Qui-sommes-nous", label: "Qui sommes-nous ?"},
-    {path: "/Organisation", label: "Organisation"},
-    {path: "/Partenariats/Créateurs", label: "Partenariats / Créateurs"},
-    {path: "/Boutique", label: "Boutique"},
-    {path: "/Billeterie", label: "Billeterie"}
+    {path: "/accueil", label: "Accueil"},
+    {path: "/qui-sommes-nous", label: "Qui sommes-nous ?"},
+    {path: "/organisation", label: "Organisation"},
+    {path: "/partenariats&créateurs", label: "Partenariats / Créateurs"},
+    {path: "/boutique", label: "Boutique"},
+    {path: "/billeterie", label: "Billeterie"}
 ];
 
 const drawerWidth = '51vh';
@@ -28,11 +28,12 @@ const Sidebar = () => {
     const navigate = useNavigate();
 
     const toggleDrawer = () => {
-        setOpen(!open);
+        setOpen(prevState => !prevState);
     };
 
     const navigationHandler = (target) => {
         navigate(target)
+        setOpen(false);
     };
 
     return (
