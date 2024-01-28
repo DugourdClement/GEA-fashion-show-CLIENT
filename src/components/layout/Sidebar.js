@@ -12,7 +12,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useNavigate} from "react-router-dom";
 
 const navigationItems = [
-    {path: "/accueil", label: "Accueil"},
     {path: "/qui-sommes-nous", label: "Qui sommes-nous ?"},
     {path: "/organisation", label: "Organisation"},
     {path: "/partenariats&créateurs", label: "Partenariats / Créateurs"},
@@ -100,14 +99,24 @@ const Sidebar = () => {
                         borderColor: 'white',
                     },
                 }}>
-                <Typography variant="h4" sx={{ml: '2vh', mt: '10vh', mb: '4vh', fontWeight: 'bold'}}>
+                <Typography variant="h4" sx={{ml: '2vh', mt: '10vh', mb: '4vh', fontWeight: 'bold', cursor: 'pointer'}}
+                            onClick={() => navigationHandler("/accueil")}>
                     Somebody Like You
                 </Typography>
                 <List>
                     {navigationItems.map((item) => (
-                        <ListItemButton key={item.path} onClick={() => navigationHandler(item.path)}>
+                        <ListItemButton
+                            key={item.path}
+                            onClick={() => navigationHandler(item.path)}
+                            sx={{
+                                '&:hover': {backgroundColor: 'transparent',},
+                                '&::before': {content: 'none'},
+                            }}>
                             <ListItemText
-                                sx={{'& .MuiListItemText-primary': {fontSize: 28, fontWeight: 'bold', color: 'gray'}}}
+                                sx={{
+                                    '& .MuiListItemText-primary': {fontSize: 28, fontWeight: 'bold', color: 'gray'},
+                                    '&:hover .MuiListItemText-primary': {color: 'white'}
+                                }}
                                 primary={item.label}
                             />
                         </ListItemButton>
