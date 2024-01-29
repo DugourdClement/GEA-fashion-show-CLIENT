@@ -1,4 +1,4 @@
-import { Box, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, useMediaQuery } from "@mui/material";
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -10,6 +10,8 @@ import flipper from "../asset/flipper.jpg"
 import imgHomePreparation from "../asset/imgHomePreparation.jpg"
 
 const Home = () => {
+
+    const isSmallScreen = useMediaQuery('(max-width:1160px)');
 
     return (
         <Box sx={{
@@ -99,7 +101,7 @@ const Home = () => {
             </Box>
             <Box sx={{
                 width: "100%",
-                height: "70vh",
+                height: isSmallScreen ? "100vh" : "70vh",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -136,20 +138,6 @@ const Home = () => {
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar>
-                                <WatchLaterIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText sx={{ width: "80px" }} primary="Début" secondary="18h30" />
-                        <ListItemAvatar>
-                            <Avatar>
-                                <QueryBuilderIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText sx={{ width: "80px" }} primary="Fin" secondary="22h30" />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemAvatar>
-                            <Avatar>
                                 <LocationOnIcon />
                             </Avatar>
                         </ListItemAvatar>
@@ -160,6 +148,20 @@ const Home = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText sx={{ width: "80px" }} primary="Date" secondary="15 Mars" />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <WatchLaterIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText sx={{ width: "80px" }} primary="Début" secondary="18h30" />
+                        <ListItemAvatar>
+                            <Avatar>
+                                <QueryBuilderIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText sx={{ width: "80px" }} primary="Fin" secondary="22h30" />
                     </ListItem>
                 </List>
             </Box>
@@ -172,12 +174,12 @@ const Home = () => {
                 justifyContent: "center",
                 background: "#f7f7f7",
             }}>
-                <MapContainer center={[43.2965, 5.3698]} zoom={13} scrollWheelZoom={false}>
+                <MapContainer center={[43.297042433176244, 5.370310174049631]} zoom={13} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={[43.2965, 5.3698]}>
+                    <Marker position={[43.297042433176244, 5.370310174049631]}>
                         <Popup>
                             Espace Bargemon, Marseille
                         </Popup>
