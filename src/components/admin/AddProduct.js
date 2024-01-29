@@ -36,7 +36,7 @@ const AddProduct = () => {
         if (imageFiles.length !== files.length) {
             alert('Only image files are allowed.');
         } else
-            setSelectedFiles(imageFiles);
+            setSelectedFiles(prevState => ({...prevState, imageFiles}));
     };
 
     const handleSubmit = (event) => {
