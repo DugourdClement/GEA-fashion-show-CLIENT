@@ -26,6 +26,7 @@ const ThemeRoutes = [
             {path: "/partenariats&créateurs", exact: true, element: <PartnershipCreator/>},
             {path: "/boutique", exact: true, element: <Shop/>},
             {path: "/billeterie", exact: true, element: <Tickets/>},
+            {path: "/admin", exact: true, element: <AdminConsole/>},
             {
                 path: "/administration", exact: true, element: <SecuredRoute childrenName="Home" children={<AdminConsole/>}></SecuredRoute>
             },
