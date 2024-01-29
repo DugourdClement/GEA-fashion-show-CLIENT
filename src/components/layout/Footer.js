@@ -18,14 +18,14 @@ const Footer = () => {
 
     return (
         <Card sx={{
-            height: '35vh',
-            backgroundColor: '#DCDCDC',
+            height: '25vh',
+            backgroundColor: '#333',
             borderTop: 'solid',
             borderColor: 'white',
         }}>
             <Grid container sx={{ ml: '23vh', mt: '5vh' }}>
                 <Grid item xs={5} sx={{ borderBottom: 'solid', borderColor: 'white' }}>
-                    <Typography sx={{ fontSize: 35, fontWeight: 'bold', cursor: 'pointer', mb: '1vh' }}
+                    <Typography sx={{ fontSize: 35, color: '#fff', fontFamily: "Cookie, cursive", fontWeight: 'bold', cursor: 'pointer', mb: '1vh' }}
                         onClick={() => navigationHandler("/accueil")}>
                         Somebody Like You
                     </Typography>
@@ -42,7 +42,7 @@ const Footer = () => {
                                 }}>
                                 <ListItemText
                                     sx={{
-                                        '& .MuiListItemText-primary': { fontSize: 28, fontWeight: 'bold', color: 'gray' },
+                                        '& .MuiListItemText-primary': { fontSize: 20, fontWeight: 'bold', color: 'gray' },
                                         '&:hover .MuiListItemText-primary': { color: 'white' }
                                     }}
                                     primary={item.label}

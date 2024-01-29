@@ -67,6 +67,7 @@ const Sidebar = () => {
                                 fontWeight: 'bold',
                                 writingMode: 'vertical-rl',
                                 transform: 'rotate(180deg)',
+                                fontFamily: "Cookie, cursive",
                                 mt: '20vh'
                             }}>
                             Somebody Like You
@@ -97,7 +98,7 @@ const Sidebar = () => {
                         boxShadow: 'none',
                     },
                 }}>
-                <Typography variant="h4" sx={{ color: "#fff", ml: '2vh', mt: '10vh', mb: '4vh', fontWeight: 'bold', cursor: 'pointer' }}
+                <Typography variant="h4" sx={{ color: "#fff", fontFamily: "Cookie, cursive", ml: '2vh', mt: '10vh', mb: '4vh', fontWeight: 'bold', cursor: 'pointer' }}
                     onClick={() => navigationHandler("/accueil")}>
                     Somebody Like You
                 </Typography>
@@ -112,7 +113,7 @@ const Sidebar = () => {
                             }}>
                             <ListItemText
                                 sx={{
-                                    '& .MuiListItemText-primary': { fontSize: 28, fontWeight: 'bold', color: 'gray' },
+                                    '& .MuiListItemText-primary': { fontSize: 20, fontWeight: 'bold', color: 'gray' },
                                     '&:hover .MuiListItemText-primary': { color: 'white' }
                                 }}
                                 primary={item.label}
