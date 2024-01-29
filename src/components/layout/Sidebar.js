@@ -16,7 +16,8 @@ const navigationItems = [
     {path: "/organisation", label: "Organisation"},
     {path: "/partenariats&créateurs", label: "Partenariats / Créateurs"},
     {path: "/boutique", label: "Boutique"},
-    {path: "/billeterie", label: "Billeterie"}
+    {path: "/billeterie", label: "Billeterie"},
+    {path: "/connection", label: "Je travail ici"},
 ];
 
 const drawerWidth = '51vh';

@@ -96,7 +96,7 @@ const SignIn = () => {
                         </Box>
 
                         <Typography variant="body2" color="text.secondary" textAlign="center">
-                            Copyright © Daisun 2024.
+                            Copyright © Somebody Like You 2024.
                         </Typography>
                     </Stack>
                 </CardContent>
