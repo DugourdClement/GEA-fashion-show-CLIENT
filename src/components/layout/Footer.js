@@ -20,8 +20,6 @@ const Footer = () => {
         <Card sx={{
             height: '20vh',
             backgroundColor: '#333',
-            borderTop: 'solid',
-            borderColor: 'white',
         }}>
             <Grid container sx={{ ml: '23vh', mt: '5vh' }}>
                 <Grid item xs={5} >
