@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const serverAPI = axios.create({
-    baseURL: ""
+    baseURL: "https://saes5mode.alwaysdata.net/"
 });
 
 

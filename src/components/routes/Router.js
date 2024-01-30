@@ -9,7 +9,7 @@ const SignIn = lazy(() => import("../SignIn"));
 const WhoAreWe = lazy(() => import("../WhoAreWe"));
 const EventDetails = lazy(() => import("../EventDetails"));
 const PartnershipCreator = lazy(() => import("../PartnershipCreator"));
-const Shop = lazy(() => import("../Shop"));
+const Shop = lazy(() => import("../shop/Shop"));
 const Tickets = lazy(() => import("../Tickets"));
 const AdminConsole = lazy(() => import("../admin/AdminConsole"));
 

@@ -38,16 +38,17 @@ const SignIn = () => {
         }
 
         const loginForm = {
-            username: email,
-            password: password
+            userEmail: email,
+            userPassword: password
         };
-        await setRequest({url: `users/signin`, data: loginForm, api: serverAPI});
+        await setRequest({url: `AdminController.php`, data: loginForm, api: serverAPI});
     }
 
     useEffect(() => {
-        if (response?.status >= 200 || response?.status < 300) {
+        if (response?.data) {
+            console.log(response)
             dispatch(userActions.login({...response?.data}));
-            navigate("/accueil");
+            navigate("/administration");
         } else if (response) {
             setError({email: true, password: true, message: "Une erreur c'est produite lors de l'authentification, merci de vérifier vos identifiants."});
         }

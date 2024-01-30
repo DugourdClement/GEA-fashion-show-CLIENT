@@ -1,10 +1,14 @@
-import {Box, Button, Grid, TextField, Typography} from "@mui/material";
+import {Box, Button, Grid, IconButton, TextField, Typography} from "@mui/material";
 import {useState} from "react";
+import InstagramIcon from '@mui/icons-material/Instagram';
+import PinterestIcon from '@mui/icons-material/Pinterest';
+import FacebookIcon from '@mui/icons-material/Facebook';
 
-const CustomTextField = ({label, required = true, onChange, value, style, multiline = false}) => {
+const CustomTextField = ({label, required = true, onChange, value, style, disable = false}) => {
     return (
         <TextField
             fullWidth
+            disabled={disable}
             multiline
             label={label}
             InputLabelProps={{
@@ -22,8 +26,12 @@ const CustomTextField = ({label, required = true, onChange, value, style, multil
 };
 
 const AddProduct = () => {
-    const [formData, setFormData] = useState({size: {xs: false, s: false, m: false, l: false, xl: false}});
+    const [formData, setFormData] = useState({
+        size: {xs: false, s: false, m: false, l: false, xl: false},
+        socials: {instagram: '', facebook: '', pinterest: ''}
+    });
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [selectedSocial, setSelectedSocial] = useState({instagram: false, facebook: false, pinterest: false});
 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
@@ -39,8 +47,29 @@ const AddProduct = () => {
             setSelectedFiles(prevState => ({...prevState, imageFiles}));
     };
 
+    const handleSocial = (e) => {
+        setFormData(prevState => {
+            const newSocials = { ...prevState.socials };
+            if (selectedSocial.instagram) newSocials.instagram = e.target.value;
+            if (selectedSocial.facebook) newSocials.facebook = e.target.value;
+            if (selectedSocial.pinterest) newSocials.pinterest = e.target.value;
+
+            return { ...prevState, socials: newSocials };
+        });
+    };
+
+    const handleSocialValue = () => {
+        if(selectedSocial.instagram)
+            return formData.socials.instagram ? formData.socials.instagram : '';
+        else if (selectedSocial.facebook)
+            return formData.socials.facebook ? formData.socials.facebook : '';
+        else if (selectedSocial.pinterest)
+            return formData.socials.pinterest ? formData.socials.pinterest : '';
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(selectedFiles)
     };
 
     return (
@@ -168,12 +197,66 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                label={"Créateur lien"}
+                                label={"Lien boutique"}
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     creatorLink: e.target.value,
                                 }))}
                                 value={formData?.creatorLink}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={2} className="mt-2" sx={{mt: '2vh'}}>
+                        <Grid item xs={6} container justifyContent="center" spacing={2}>
+                            <Grid item>
+                                <IconButton
+                                    onClick={() => setSelectedSocial(prevState => ({
+                                        instagram: !prevState.instagram,
+                                        facebook: false,
+                                        pinterest: false,
+                                    }))}
+                                    sx={{
+                                        color: selectedSocial.instagram ? 'primary.main' : 'grey.500',
+                                    }}
+                                >
+                                    <InstagramIcon/>
+                                </IconButton>
+                            </Grid>
+                            <Grid item>
+                                <IconButton
+                                    onClick={() => setSelectedSocial(prevState => ({
+                                        instagram: false,
+                                        facebook: !prevState.facebook,
+                                        pinterest: false,
+                                    }))}
+                                    sx={{
+                                        color: selectedSocial.facebook ? 'primary.main' : 'grey.500',
+                                    }}
+                                >
+                                    <FacebookIcon/>
+                                </IconButton>
+                            </Grid>
+                            <Grid item>
+                                <IconButton
+                                    onClick={() => setSelectedSocial(prevState => ({
+                                        instagram: false,
+                                        facebook: false,
+                                        pinterest: !prevState.pinterest,
+                                    }))}
+                                    sx={{
+                                        color: selectedSocial.pinterest ? 'primary.main' : 'grey.500',
+                                    }}
+                                >
+                                    <PinterestIcon/>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <CustomTextField
+                                label={"Lien réseau"}
+                                onChange={e => handleSocial(e)}
+                                value={handleSocialValue()}
+                                disable={!selectedSocial.instagram && !selectedSocial.facebook && !selectedSocial.pinterest}
                             />
                         </Grid>
                     </Grid>
