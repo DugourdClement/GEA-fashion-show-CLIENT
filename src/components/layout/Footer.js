@@ -18,19 +18,19 @@ const Footer = () => {
 
     return (
         <Card sx={{
-            height: '25vh',
+            height: '20vh',
             backgroundColor: '#333',
             borderTop: 'solid',
             borderColor: 'white',
         }}>
             <Grid container sx={{ ml: '23vh', mt: '5vh' }}>
-                <Grid item xs={5} sx={{ borderBottom: 'solid', borderColor: 'white' }}>
+                <Grid item xs={5} >
                     <Typography sx={{ fontSize: 35, color: '#fff', fontFamily: "Cookie, cursive", fontWeight: 'bold', cursor: 'pointer', mb: '1vh' }}
                         onClick={() => navigationHandler("/accueil")}>
                         Somebody Like You
                     </Typography>
                 </Grid>
-                <Grid item xs={6} sx={{ borderBottom: 'solid', borderColor: 'white', pr: '4vh' }}>
+                <Grid item xs={6} sx={{ pr: '4vh' }}>
                     <Grid container direction="row" spacing={2}>
                         {navigationItems.map((item) => (
                             <ListItemButton
@@ -53,7 +53,9 @@ const Footer = () => {
                 </Grid>
                 <Grid container>
                     <Grid item xs={9}>
-                        <Typography>Contacts à ajouter</Typography>
+                        <Typography sx={{
+                            color: "#fff"
+                        }}>Contacts à ajouter</Typography>
                     </Grid>
                     <Grid
                         item xs={3}
@@ -61,10 +63,9 @@ const Footer = () => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            pt: '5vh',
                             pr: '4vh'
                         }}>
-                        <InstagramIcon sx={{ transform: 'scale(1.5)' }} />
+                        <InstagramIcon sx={{ transform: 'scale(1.2)', color: "#fff" }} />
                     </Grid>
                 </Grid>
             </Grid>

@@ -54,8 +54,8 @@ const Home = () => {
             </Box>
             <Box sx={{
                 width: "100%",
-                height: "50vh",
                 display: "flex",
+                margin: "10vh 0",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
@@ -75,8 +75,8 @@ const Home = () => {
             </Box>
             <Box sx={{
                 width: "100%",
-                height: "60vh",
                 display: "flex",
+                padding: "20vh 0",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
@@ -101,7 +101,7 @@ const Home = () => {
             </Box>
             <Box sx={{
                 width: "100%",
-                height: isSmallScreen ? "100vh" : "70vh",
+                padding: "10vh 0",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -165,7 +165,7 @@ const Home = () => {
                     </ListItem>
                 </List>
             </Box>
-            <Box sx={{
+            {/* <Box sx={{
                 width: "100%",
                 height: "100vh",
                 display: "flex",
@@ -185,7 +185,7 @@ const Home = () => {
                         </Popup>
                     </Marker>
                 </MapContainer>
-            </Box>
+            </Box> */}
         </Box >
     );
 };

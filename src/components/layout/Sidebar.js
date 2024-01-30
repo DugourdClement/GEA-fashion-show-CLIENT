@@ -46,7 +46,8 @@ const Sidebar = () => {
                     zIndex: 1,
                     backgroundColor: '#333',
                     border: "none",
-                    borderRadius: "0"
+                    borderRadius: "0",
+                    boxShadow: ' 1px 0 10px 0 #000'
                 }}
             >
                 <Grid container direction="column" alignItems="center">
