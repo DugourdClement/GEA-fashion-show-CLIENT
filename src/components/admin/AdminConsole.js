@@ -3,6 +3,7 @@ import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import AddProduct from "./AddProduct";
 import SeeRegistered from "./SeeRegistered";
 import SeeProducts from "./SeeProducts";
+import AddCreator from "./AddCreator";
 
 const AdminConsole = () => {
     const [selectedComponent, setSelectedComponent] = useState('seeProducts');
@@ -14,6 +15,8 @@ const AdminConsole = () => {
                 return <SeeRegistered/>;
             case 'seeProducts':
                 return <SeeProducts/>;
+            case 'addCreator':
+                return <AddCreator/>;
             default:
                 return null;
         }
@@ -31,6 +34,10 @@ const AdminConsole = () => {
                         <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
                                 onClick={() => setSelectedComponent('addProduct')} fullWidth>
                             Ajouter un produit
+                        </Button>
+                        <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
+                                onClick={() => setSelectedComponent('addCreator')} fullWidth>
+                            Ajouter un créateur
                         </Button>
                         <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
                                 onClick={() => setSelectedComponent('seeRegistered')} fullWidth>

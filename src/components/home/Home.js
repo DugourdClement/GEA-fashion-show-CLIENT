@@ -17,6 +17,7 @@ import 'leaflet/dist/leaflet.css';
 import imgHomeDefile from "../asset/imgHomeDefile.png"
 import flipper from "../asset/flipper.jpg"
 import imgHomePreparation from "../asset/imgHomePreparation.jpg"
+import React from "react";
 
 const Home = () => {
 
@@ -190,6 +191,15 @@ const Home = () => {
                 justifyContent: "center",
                 background: "#f7f7f7",
             }}>
+                <Typography
+                    variant='h5'
+                    sx={{
+                        fontSize: "1.5em",
+                        fontWeight: "300",
+                        lineHeight: "86px",
+                        fontFamily: "Roboto Condensed, sans-serif",
+                    }}>
+                    Plan d'accès</Typography>
                 <Card fullWidth sx={{height: '100vh', width: '100vh', mb: '5vh'}}>
                     <MapContainer center={[43.297042433176244, 5.370310174049631]} zoom={13} scrollWheelZoom={false}
                                   style={{height: '100%', width: '100%', padding: '2vh'}}>
