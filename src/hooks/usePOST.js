@@ -17,11 +17,12 @@ const usePOST = ({url, data, authorization, api}) => {
                 }
             } catch (error) {
                 setResponse(error);
+                console.log(error)
             }
     
         }
         callApi();
-    }, [initialRequest]);;
+    }, [initialRequest]);
 
     return [response, setInitialRequest];
 };
