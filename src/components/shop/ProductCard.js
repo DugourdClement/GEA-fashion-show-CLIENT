@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
     Box,
     Button,
@@ -18,7 +18,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import FacebookIcon from '@mui/icons-material/Facebook';
 
-const TruncatedLink = ({url, text}) => {
+const TruncatedLink = ({ url, text }) => {
     return (
         <Link
             href={url}
@@ -41,7 +41,7 @@ const TruncatedLink = ({url, text}) => {
     );
 };
 
-const IconLink = ({url, icon}) => {
+const IconLink = ({ url, icon }) => {
     return (
 
         <IconButton>
@@ -54,9 +54,9 @@ const IconLink = ({url, icon}) => {
 };
 
 export const ImageCarousel = ({
-                                  images, onClick = () => {
+    images, onClick = () => {
     }
-                              }) => {
+}) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlePrev = () => {
@@ -73,142 +73,182 @@ export const ImageCarousel = ({
     };
 
     return (
-        <Box sx={{display: 'flex', alignItems: 'center'}} onClick={e => onClick(e)}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={e => onClick(e)}>
             <Button onClick={handlePrev}>
-                <ArrowBackIosNewIcon/>
+                <ArrowBackIosNewIcon />
             </Button>
             <Card>
                 <CardMedia
+                    sx={{ width: "500px", height: "50vh" }}
                     component="img"
                     image={images[activeIndex]}
                     alt={`Image ${activeIndex + 1}`}
                 />
             </Card>
             <Button onClick={handleNext}>
-                <ArrowForwardIosIcon/>
+                <ArrowForwardIosIcon />
             </Button>
         </Box>
     );
 };
 
-export const ExtendedProduct = ({product}) => {
+export const ExtendedProduct = ({ product }) => {
     const [creatorShopOpen, setCreatorShopOpen] = useState(false);
     const [sizesOpen, setSizesOpen] = useState(false);
     const [materialsOpen, setMaterialsOpen] = useState(false);
 
     return (
         <>
-            <Grid container sx={{mt: '5vh'}}>
+            <Grid container sx={{ mt: '5vh' }}>
                 <Grid item xs={6}>
-                    <ImageCarousel images={product.img}/>
+                    <ImageCarousel images={product.img} />
                 </Grid>
                 <Grid item xs={1}>
-                    <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>
-                        <Divider orientation="vertical" sx={{height: 'inherit'}}/>
+                    <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <Divider orientation="vertical" sx={{ height: 'inherit' }} />
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    <Typography variant='h4'>{product.name}</Typography>
-                    <Typography variant="body1" sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
+                    <Typography sx={{ fontFamily: "Roboto Condensed, sans-serif" }} variant='h4'>{product.name}</Typography>
+                    <Typography variant="body1" sx={{ wordWrap: 'break-word', overflow: 'hidden' }}>
                         {product.price} €
                     </Typography>
-
-                    <Typography variant='h5' sx={{mt: '4vh', backgroundColor: 'gray', borderRadius: '1vh', pl: '1vh', cursor: 'pointer'}}
-                                onClick={() => setCreatorShopOpen(prevState => !prevState)}>
-                        La boutique</Typography>
-                    {(creatorShopOpen && product.creatorLink) &&
-                        <TruncatedLink url={product.creatorLink} text={'Site du créateur'}/>
-                    }
-                    {creatorShopOpen &&
-                    <Divider variant='middle' sx={{mb: '2vh'}}/> }
-                    {creatorShopOpen &&
-                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh'}}>
-                            <Grid container justifyContent='space-around'>
-                                {product.socials.instagramLink &&
-                                    <IconLink url={product.socials.instagramLink} icon={<InstagramIcon/>}/>}
-                                {product.socials.facebookLink &&
-                                    <IconLink url={product.socials.facebookLink} icon={<FacebookIcon/>}/>}
-                                {product.socials.pinterestLink &&
-                                    <IconLink url={product.socials.pinterestLink} icon={<PinterestIcon/>}/>}
-                            </Grid>
-                        </Box>}
-                    <Typography variant='h5' sx={{mt: '2vh', backgroundColor: 'gray', borderRadius: '1vh', pl: '1vh', cursor: 'pointer'}}
-                                onClick={() => setSizesOpen(prevState => !prevState)}>
-                        Tailles disponnibles</Typography>
-                    {sizesOpen &&
-                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh'}}>
-                            <Grid container spacing={3} justifyContent='center'>
-                                {JSON.parse(product.size).map((size, index) => (
-                                    <Grid key={index} item sx={{p: '1vh'}}>
-                                        <Card sx={{pl: '1vh', pr: '1vh'}}>
-                                            {size}
-                                        </Card>
-                                    </Grid>
+                    <Box sx={{
+                        marginTop: "1vh"
+                    }}>
+                        <Typography
+                            variant='h5'
+                            sx={{
+                                cursor: 'pointer',
+                                fontFamily: "Roboto Condensed, sans-serif",
+                                background: "#f7f7f7",
+                                padding: "1vh"
+                            }}
+                            onClick={() => setCreatorShopOpen(prevState => !prevState)}
+                        >
+                            La boutique
+                        </Typography>
+                        {(creatorShopOpen && product.creatorLink) &&
+                            <TruncatedLink url={product.creatorLink} text={'Site du créateur'} />
+                        }
+                        {creatorShopOpen &&
+                            <Divider variant='middle' sx={{ mb: '2vh' }} />}
+                        {creatorShopOpen &&
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh' }}>
+                                <Grid container justifyContent='space-around'>
+                                    {product.socials.instagramLink &&
+                                        <IconLink url={product.socials.instagramLink} icon={<InstagramIcon />} />}
+                                    {product.socials.facebookLink &&
+                                        <IconLink url={product.socials.facebookLink} icon={<FacebookIcon />} />}
+                                    {product.socials.pinterestLink &&
+                                        <IconLink url={product.socials.pinterestLink} icon={<PinterestIcon />} />}
+                                </Grid>
+                            </Box>}
+                    </Box>
+                    <Box sx={{
+                        marginTop: "1vh"
+                    }}>
+                        <Typography
+                            variant='h5'
+                            sx={{
+                                cursor: 'pointer',
+                                fontFamily: "Roboto Condensed, sans-serif",
+                                background: "#f7f7f7",
+                                padding: "1vh"
+                            }}
+                            onClick={() => setSizesOpen(prevState => !prevState)}
+                        >
+                            Tailles disponibles
+                        </Typography>
+                        {sizesOpen &&
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh' }}>
+                                <Grid container spacing={3} justifyContent='center'>
+                                    {JSON.parse(product.size).map((size, index) => (
+                                        <Grid key={index} item sx={{ p: '1vh' }}>
+                                            <Card sx={{ pl: '1vh', pr: '1vh' }}>
+                                                {size}
+                                            </Card>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </Box>}
+                    </Box>
+                    <Box sx={{
+                        marginTop: "1vh"
+                    }}>
+                        <Typography
+                            variant='h5'
+                            sx={{
+                                cursor: 'pointer',
+                                fontFamily: "Roboto Condensed, sans-serif",
+                                background: "#f7f7f7",
+                                padding: "1vh"
+                            }}
+                            onClick={() => setMaterialsOpen(prevState => !prevState)}
+                        >Matériaux
+                        </Typography>
+                        {materialsOpen &&
+                            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', ml: '2vh' }}>
+                                {product.materials.split(', ').map((material) => (
+                                    <ListItem
+                                        key={material}
+                                        disableGutters
+                                    >
+                                        <ListItemText primary={`- ${material}`} />
+                                    </ListItem>
                                 ))}
-                            </Grid>
-                        </Box>}
-
-                    <Typography variant='h5' sx={{mt: '3vh', backgroundColor: 'gray', borderRadius: '1vh', pl: '1vh', cursor: 'pointer'}}
-                                onClick={() => setMaterialsOpen(prevState => !prevState)}>Matériaux</Typography>
-                    {materialsOpen &&
-                        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper', ml: '2vh'}}>
-                            {product.materials.split(', ').map((material) => (
-                                <ListItem
-                                    key={material}
-                                    disableGutters
-                                >
-                                    <ListItemText primary={`- ${material}`}/>
-                                </ListItem>
-                            ))}
-                        </List>}
+                            </List>}
+                    </Box>
                 </Grid>
-            </Grid>
-            <Grid sx={{p: '2vh', pl: '7vh', pr: '7vh'}}>
-                <Typography variant='h5' sx={{mt: '5vh'}}>Description</Typography>
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                    <Typography variant="body1" sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
+            </Grid >
+            <Grid sx={{ p: '2vh', pl: '7vh', pr: '7vh' }}>
+                <Typography variant='h5' sx={{ mt: '5vh', fontFamily: "Roboto Condensed, sans-serif" }}>Description</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="body1" sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
                         {product.description}
                     </Typography>
                 </Box>
             </Grid>
-            {product.history &&
-                <Grid sx={{p: '2vh', mb: '3vh', pl: '7vh', pr: '7vh'}}>
-                    <Typography variant='h5' sx={{mt: '2vh'}}>Histoire</Typography>
-                    <Box sx={{display: 'flex', alignItems: 'center', height: '100%'}}>
+            {
+                product.history &&
+                <Grid sx={{ p: '2vh', mb: '3vh', pl: '7vh', pr: '7vh' }}>
+                    <Typography variant='h5' sx={{ mt: '2vh', fontFamily: "Roboto Condensed, sans-serif" }}>Histoire</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                         <Typography variant="body1"
-                                    sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
+                            sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
                             {product.history}
                         </Typography>
                     </Box>
-                </Grid>}
+                </Grid>
+            }
         </>
     );
 };
 
-export const PreviewCard = ({product, productIndex, toggleCard}) => {
+export const PreviewCard = ({ product, productIndex, toggleCard }) => {
     const handleCarouselClick = (event) => {
         event.stopPropagation();
     };
 
     return (
-        <Grid container onClick={() => toggleCard(productIndex)} sx={{cursor: 'pointer',}}>
+        <Grid container onClick={() => toggleCard(productIndex)} sx={{ cursor: 'pointer', }}>
             <Grid item xs={4} sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '50vh'
             }}>
-                <ImageCarousel images={product.img} onClick={handleCarouselClick}/>
+                <ImageCarousel images={product.img} onClick={handleCarouselClick} />
             </Grid>
             <Grid item xs={1}>
-                <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>
-                    <Divider orientation="vertical" sx={{height: 'inherit'}}/>
+                <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
+                    <Divider orientation="vertical" sx={{ height: 'inherit' }} />
                 </Box>
             </Grid>
             <Grid item xs={6}>
-                <Box sx={{display: 'flex', alignItems: 'center', height: '100%'}}>
-                    <Typography variant="body1"
-                                sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
+                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                    <Typography variant="body"
+                        sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
                         {product.description}
                     </Typography>
                 </Box>

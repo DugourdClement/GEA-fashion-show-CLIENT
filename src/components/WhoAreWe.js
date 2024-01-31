@@ -1,8 +1,33 @@
 import { Box, Typography } from "@mui/material";
 import logoQuiSommesNous from "../components/asset/logoQuiSommesNous.png"
 import previousEdition from "../components/asset/previousEdition.png"
+import React, { useState, useEffect } from 'react';
+
 
 const WhoAreWe = () => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const flexDirection = windowWidth < 1300 ? "column" : "row";
+    const titleMargin = windowWidth < 800 ? "5vw 20vw" : "5vh 30vh 10vh 20vh"
+    const bodyMargin = windowWidth < 800 ? "0 10vh" : "5vh 30vh 10vh 20vh"
+    const titleSize = windowWidth < 800 ? "4em" : "6em"
+    const fontSizeText = windowWidth < 800 ? "16px" : "20px";
+    const marginRight = windowWidth < 1300 ? "0" : "5vw"
+    const imgWidth = windowWidth < 800 ? "50vw" : "300px";
+
     return (
         <Box sx={{
             width: "100%",
@@ -11,13 +36,13 @@ const WhoAreWe = () => {
             flexDirection: "column",
         }}>
             <Box sx={{
-                margin: "10vh 40vh 5vh 20vh",
+                margin: titleMargin,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
             }}>
                 <Typography sx={{
-                    fontSize: "6em",
+                    fontSize: titleSize,
                     fontWeight: "300",
                     lineHeight: "86px",
                     fontFamily: "Cookie, cursive",
@@ -26,7 +51,7 @@ const WhoAreWe = () => {
                 </Typography>
             </Box>
             <Box sx={{
-                margin: "5vh 30vh 10vh 20vh",
+                margin: bodyMargin,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -34,21 +59,23 @@ const WhoAreWe = () => {
                 <Typography sx={{
                     fontSize: "1.5em",
                     fontWeight: "300",
-                    lineHeight: "86px",
                     fontFamily: "Roboto Condensed, sans-serif",
+                    marginBottom: "2vh",
                 }}>
                     Description de l'évènement :
                 </Typography>
                 <Box sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: flexDirection,
                     alignItems: "center"
                 }}>
                     <Typography sx={{
                         fontFamily: "Roboto Condensed, sans-serif",
-                        fontSize: "1.2em",
+                        fontSize: fontSizeText,
                         lineHeight: "25px",
-                        marginRight: "5vw"
+                        marginRight: marginRight,
+                        marginBottom: "5vh",
+                        textAlign: "justify"
                     }}>
                         Ce défilé est un projet de fin d’année des étudiants en deuxième année du BUT (Bachelor Universitaire de Technologie)
                         GEA (Gestion des Entreprises et des Administrations).
@@ -65,11 +92,11 @@ const WhoAreWe = () => {
 
                         Cet événement sera ouvert à un large public et restera, on l’espère, le plus longtemps dans l’esprit des participants.
                     </Typography>
-                    <img src={logoQuiSommesNous} style={{ width: "300px" }} />
+                    <img src={logoQuiSommesNous} style={{ width: imgWidth, marginBottom: "5vh" }} />
                 </Box>
             </Box>
             <Box sx={{
-                padding: "5vh 40vh 10vh 30vh",
+                padding: bodyMargin,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-end",
@@ -86,16 +113,17 @@ const WhoAreWe = () => {
                 </Typography>
                 <Box sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: flexDirection,
                     alignItems: "center",
                 }}>
-                    <img src={previousEdition} style={{ width: "300px" }} />
+                    <img src={previousEdition} style={{ width: "300px", marginBottom: "5vh" }} />
                     <Typography sx={{
                         fontFamily: "Roboto Condensed, sans-serif",
                         fontSize: "1.2em",
                         lineHeight: "25px",
                         margin: "0 5vw",
-                        textAlign: "end"
+                        textAlign: "justify",
+                        marginBottom: "5vh"
                     }}>
                         Découvrez notre parcours de plus de 10 ans à travers des défilés de mode uniques, mettant en lumière les thèmes
                         inspirants de l'intergénérationnel, l'interculturel et de l'inclusivité. Explorez nos nombreuses éditions et plongez

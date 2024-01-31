@@ -60,20 +60,19 @@ const Sidebar = () => {
                             {!open ? <MenuIcon sx={{ color: "#fff" }} /> : <CloseIcon sx={{ color: "#fff" }} />}
                         </IconButton>
                     </Grid>
-                    <Grid item>
-                        {!open && <Typography
-                            sx={{
-                                fontSize: 35,
-                                color: "#fff",
-                                fontWeight: 'bold',
-                                writingMode: 'vertical-rl',
-                                transform: 'rotate(180deg)',
-                                fontFamily: "Cookie, cursive",
-                                mt: '20vh'
-                            }}>
-                            Somebody Like You
-                        </Typography>}
-                    </Grid>
+                    {!open && <Typography
+                        sx={{
+                            fontSize: 35,
+                            color: "#fff",
+                            fontWeight: 'bold',
+                            writingMode: 'vertical-rl',
+                            transform: 'rotate(180deg)',
+                            fontFamily: "Cookie, cursive",
+                            mt: '20vh',
+                            cursor: "default"
+                        }}>
+                        Somebody Like You
+                    </Typography>}
                 </Grid>
             </Card>
             <Drawer

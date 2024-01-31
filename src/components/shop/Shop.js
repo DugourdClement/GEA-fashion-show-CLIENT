@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
     Alert,
     AlertTitle,
     Card,
     Typography
 } from "@mui/material";
-import {useState} from "react";
-import {serverAPI} from "../../config/api";
+import { useState } from "react";
+import { serverAPI } from "../../config/api";
 import useGET from "../../hooks/useGET";
-import {ExtendedProduct, PreviewCard} from "./ProductCard";
+import { ExtendedProduct, PreviewCard } from "./ProductCard";
 
 const Shop = () => {
     const images = [
@@ -26,7 +26,7 @@ const Shop = () => {
                         size: '["S","M","L"]',
                         price: '45.3',
                         materials: 'tyf, guhbijo,pl, fcgvhbjn,l',
-                        socials: {instagramLink: 'insta', facebookLink: 'face', pinterestLink: 'pint'},
+                        socials: { instagramLink: 'insta', facebookLink: 'face', pinterestLink: 'pint' },
                         creatorLink: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
                     },
                     {
@@ -122,20 +122,20 @@ const Shop = () => {
                 ],
         },
     ];
-    const [response, setRequest] = useGET({url: `ProductController.php`, data: {}, api: serverAPI});
+    const [response, setRequest] = useGET({ url: `ProductController.php`, data: {}, api: serverAPI });
 
     const [openCardIndex, setOpenCardIndex] = useState(null);
     const [image, setImages] = useState(null);
-    const [error, setError] = useState({status: false, message: ""});
+    const [error, setError] = useState({ status: false, message: "" });
 
-    useEffect(() => {
-        if (response?.data) {
-            setImages(response?.data[0].pictures[0]);
-            console.log(response.data)
-        } else if (response) {
-            setError({status: true, message: "Une erreur c'est produite lors de la récupération des produits."});
-        }
-    }, [response]);
+    // useEffect(() => {
+    //     if (response?.data) {
+    //         setImages(response?.data[0].pictures[0]);
+    //         console.log(response.data)
+    //     } else if (response) {
+    //         setError({status: true, message: "Une erreur c'est produite lors de la récupération des produits."});
+    //     }
+    // }, [response]);
 
     const toggleCard = (index) => {
         setOpenCardIndex(prevIndex => prevIndex === index ? null : index);
@@ -143,27 +143,28 @@ const Shop = () => {
     };
 
     return (
-        <Card sx={{maxWidth: '90%', margin: 'auto', mt: 5, mb: 5, p: '2vh', backgroundColor: 'gray'}}>
+        <Card sx={{ maxWidth: '90%', margin: 'auto', mt: 5, mb: 5, p: '2vh', background: "#f7f7f7" }}>
             {images.map((creator, index) =>
-                (<React.Fragment key={index}>
-                    <Typography variant="h4" sx={{p: '2vh'}}>{creator.creator}</Typography>
-                    {creator.products.map((product) => (
-                        <Card
-                            key={product.id}
-                            sx={{
-                                mt: '2vh',
-                                mb: '2vh',
-                                p: '1vh',
-                                height: 'auto'
-                            }}>
-                            {(openCardIndex !== product.id || openCardIndex === null) ?
-                                <PreviewCard product={product} productIndex={product.id} image={product.image}
-                                             toggleCard={toggleCard}/>
-                                :
-                                <ExtendedProduct productIndex={product.id} product={product}/>}
-                        </Card>
-                    ))}
-                </React.Fragment>))}
+            (<React.Fragment key={index}>
+                <Typography variant="h4" sx={{ p: '2vh', fontFamily: "Roboto Condensed, sans-serif" }}>{creator.creator}</Typography>
+                {creator.products.map((product) => (
+                    <Card
+                        key={product.id}
+                        sx={{
+                            mt: '2vh',
+                            mb: '2vh',
+                            p: '1vh',
+                            height: 'auto',
+
+                        }}>
+                        {(openCardIndex !== product.id || openCardIndex === null) ?
+                            <PreviewCard product={product} productIndex={product.id} image={product.image}
+                                toggleCard={toggleCard} />
+                            :
+                            <ExtendedProduct productIndex={product.id} product={product} />}
+                    </Card>
+                ))}
+            </React.Fragment>))}
             {(error.email || error.password) && <Alert severity="error">
                 <AlertTitle>Erreur</AlertTitle>
                 {error.message}
