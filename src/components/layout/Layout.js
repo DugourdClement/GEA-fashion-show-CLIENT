@@ -1,15 +1,15 @@
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 
 const Layout = () => {
     return (
-        <div style={{display: 'flex', minHeight: '100vh', flexDirection: 'column'}}>
-            <Sidebar/>
-            <div style={{marginLeft: '16vh', flexGrow: 1}}>
-                <Outlet/>
+        <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
+            <Sidebar />
+            <div style={{ marginLeft: '15vh', flexGrow: 1 }}>
+                <Outlet />
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };
