@@ -1,5 +1,5 @@
-import {Box, Button, Grid, IconButton, Typography} from "@mui/material";
-import {useState} from "react";
+import {Alert, AlertTitle, Box, Button, Grid, IconButton, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -9,6 +9,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import usePOST from "../../hooks/usePOST";
+import {serverAPI} from "../../config/api";
 
 const AdminInfo = ({setFormData, formData, nameRequired = false}) => {
     return (
@@ -50,18 +52,33 @@ const AdminInfo = ({setFormData, formData, nameRequired = false}) => {
     );
 };
 
-const AddCreator = () => {
-    const [formData, setFormData] = useState({
-        size: {xs: false, s: false, m: false, l: false, xl: false},
-        socials: {instagram: '', facebook: '', pinterest: ''}
-    });
+const initialState = {
+    socials: {instagram: '', facebook: '', pinterest: ''}
+}
 
+const AddCreator = () => {
+    const [responsePost, setPostRequest] = usePOST({url: '', data: {}, api: ''});
+
+    const [formData, setFormData] = useState(initialState);
     const [selectedSocial, setSelectedSocial] = useState({instagram: false, facebook: false, pinterest: false});
     const [selectedType, setSelectedType] = useState('independant');
+    const [error, setError] = useState({status: false, message: ""});
+
+
+    useEffect(() => {
+        if(responsePost) {
+            if (responsePost?.data === true) {
+                setFormData(initialState);
+            } else if (responsePost) {
+                setError({status: true, message: "Une erreur c'est produite lors de l'ajout' du créateur."});
+            }
+        }
+    }, [responsePost]);
 
     const handleChange = (event) => {
         setSelectedType(event.target.value);
     };
+
     const handleSocial = (e) => {
         setFormData(prevState => {
             const newSocials = {...prevState.socials};
@@ -84,6 +101,7 @@ const AddCreator = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setPostRequest({url: 'CreatorController.php', data: formData, api: serverAPI});
     };
 
     return (
@@ -118,9 +136,9 @@ const AddCreator = () => {
                                         label={selectedType === 'collectif' ? "Nom du collectif" : "Nom de l'organisation"}
                                         onChange={e => setFormData(prevState => ({
                                             ...prevState,
-                                            lastname: e.target.value,
+                                            orgName: e.target.value,
                                         }))}
-                                        value={formData?.lastname}
+                                        value={formData?.orgName}
                                     />
                                 </Grid>
                             </Grid>
@@ -230,6 +248,10 @@ const AddCreator = () => {
                     </Button>
                 </Box>
             </Grid>
+            {(error.email || error.password) && <Alert severity="error">
+                <AlertTitle>Erreur</AlertTitle>
+                {error.message}
+            </Alert>}
         </Grid>
     );
 };

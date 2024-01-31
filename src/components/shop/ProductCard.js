@@ -41,7 +41,7 @@ const TruncatedLink = ({url, text}) => {
     );
 };
 
-const IconLink = ({url, icon}) => {
+export const IconLink = ({url, icon}) => {
     return (
 
         <IconButton>
@@ -53,10 +53,7 @@ const IconLink = ({url, icon}) => {
     );
 };
 
-export const ImageCarousel = ({
-                                  images, onClick = () => {
-    }
-                              }) => {
+export const ImageCarousel = ({images, onClick = () => {}}) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlePrev = () => {

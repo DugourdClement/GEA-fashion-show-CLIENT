@@ -1,9 +1,9 @@
 import {useState} from "react";
-import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
+import {Button, Card, CardContent, Grid} from "@mui/material";
 import AddProduct from "./AddProduct";
-import SeeRegistered from "./SeeRegistered";
 import SeeProducts from "./SeeProducts";
 import AddCreator from "./AddCreator";
+import SeeCreator from "./SeeCreators";
 
 const AdminConsole = () => {
     const [selectedComponent, setSelectedComponent] = useState('seeProducts');
@@ -11,12 +11,12 @@ const AdminConsole = () => {
         switch (selectedComponent) {
             case 'addProduct':
                 return <AddProduct/>;
-            case 'seeRegistered':
-                return <SeeRegistered/>;
             case 'seeProducts':
                 return <SeeProducts/>;
             case 'addCreator':
                 return <AddCreator/>;
+            case 'seeCreator':
+                return <SeeCreator/>;
             default:
                 return null;
         }
@@ -40,8 +40,8 @@ const AdminConsole = () => {
                             Ajouter un créateur
                         </Button>
                         <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
-                                onClick={() => setSelectedComponent('seeRegistered')} fullWidth>
-                            Voir les inscrits
+                                onClick={() => setSelectedComponent('seeCreator')} fullWidth>
+                            Tous les créateurs
                         </Button>
                     </Grid>
                     <Grid item xs={12} sm={9} sx={{display: 'flex', justifyContent: 'center'}}>

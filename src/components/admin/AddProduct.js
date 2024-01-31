@@ -1,17 +1,67 @@
-import {Box, Button, Grid, IconButton, TextField, Typography} from "@mui/material";
-import {useState} from "react";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import PinterestIcon from '@mui/icons-material/Pinterest';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import {Alert, AlertTitle, Autocomplete, Box, Button, Grid, TextField, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import CustomTextField from "./CustomTextField";
+import {serverAPI} from "../../config/api";
+import usePOST from "../../hooks/usePOST";
+import useGET from "../../hooks/useGET";
+import FormControl from "@mui/material/FormControl";
+
+const initialState = {
+    size: {xs: false, s: false, m: false, l: false, xl: false}
+};
 
 const AddProduct = () => {
-    const [formData, setFormData] = useState({
-        size: {xs: false, s: false, m: false, l: false, xl: false},
-        socials: {instagram: '', facebook: '', pinterest: ''}
-    });
+    const [response, setRequest] = useGET({url: '', data: {}, api: ''});
+    const [responsePost, setPostRequest] = usePOST({url: '', data: {}, api: ''});
+
+    const [formData, setFormData] = useState(initialState);
     const [selectedFiles, setSelectedFiles] = useState([]);
-    const [selectedSocial, setSelectedSocial] = useState({instagram: false, facebook: false, pinterest: false});
+    const [error, setError] = useState({status: false, message: ""});
+    const [creatorId, setCreatorId] = useState("");
+    const [possibleCreator, setPossibleCreator] = useState([]);
+
+    useEffect(() => {
+        if (Object.keys(creatorId).length < 2) {
+            return;
+        }
+
+        const timeout = setTimeout(() => {
+            console.log("fetchCreator")
+            const fetchCreators = async () => {
+                setRequest({
+                    url: `/CreatorController.php?selectCreators=${creatorId}`, data: {}, api: serverAPI
+                });
+            };
+
+            fetchCreators();
+        }, 700);
+
+        return () => {
+            clearTimeout(timeout);
+        }
+    }, [setRequest, creatorId]);
+
+    useEffect(() => {
+        if(response) {
+            if (response?.data) {
+                setPossibleCreator(response.data);
+                console.log(response.data)
+            } else if (response) {
+                setError({status: true, message: "Une erreur c'est produite lors de la récupération des créateurs."});
+            }
+        }
+    }, [response, setPossibleCreator]);
+
+    useEffect(() => {
+        if(responsePost) {
+            if (responsePost?.data === true) {
+                setFormData(initialState);
+                console.log(responsePost.data)
+            } else if (responsePost) {
+                setError({status: true, message: "Une erreur c'est produite lors de l'ajout du produit'."});
+            }
+        }
+    }, [responsePost]);
 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
@@ -27,29 +77,10 @@ const AddProduct = () => {
             setSelectedFiles(prevState => ({...prevState, imageFiles}));
     };
 
-    const handleSocial = (e) => {
-        setFormData(prevState => {
-            const newSocials = { ...prevState.socials };
-            if (selectedSocial.instagram) newSocials.instagram = e.target.value;
-            if (selectedSocial.facebook) newSocials.facebook = e.target.value;
-            if (selectedSocial.pinterest) newSocials.pinterest = e.target.value;
-
-            return { ...prevState, socials: newSocials };
-        });
-    };
-
-    const handleSocialValue = () => {
-        if(selectedSocial.instagram)
-            return formData.socials.instagram ? formData.socials.instagram : '';
-        else if (selectedSocial.facebook)
-            return formData.socials.facebook ? formData.socials.facebook : '';
-        else if (selectedSocial.pinterest)
-            return formData.socials.pinterest ? formData.socials.pinterest : '';
-    };
-
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(selectedFiles)
+        console.log(formData)
+        setPostRequest({url: 'ProductController.php', data: formData, api: serverAPI});
     };
 
     return (
@@ -131,6 +162,7 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
+                                required={false}
                                 label={"Matières"}
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
@@ -143,7 +175,7 @@ const AddProduct = () => {
                     <Grid container spacing={2} className="mt-2" sx={{mt: '2vh'}}>
                         <Grid item xs={6}>
                             <CustomTextField
-                                multiline={true}
+                                required={false}
                                 label={"Description"}
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
@@ -154,7 +186,7 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                multiline={true}
+                                required={false}
                                 label={"Histoire"}
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
@@ -166,77 +198,61 @@ const AddProduct = () => {
                     </Grid>
                     <Grid container spacing={2} className="mt-2" sx={{mt: '2vh'}}>
                         <Grid item xs={6}>
-                            <CustomTextField
-                                label={"Créateur"}
-                                onChange={e => setFormData(prevState => ({
-                                    ...prevState,
-                                    creator: e.target.value,
-                                }))}
-                                value={formData?.creator}
-                            />
+                            <FormControl fullWidth variant="standard">
+                                <Autocomplete
+                                    freeSolo
+                                    disableClearable
+                                    options={possibleCreator}
+                                    getOptionLabel={(option) => {
+                                        if (option.ORG_NAME) {
+                                            return option.ORG_NAME;
+                                        }
+                                        return [option.FIRSTNAME, option.LASTNAME].filter(Boolean).join(' ');
+                                    }}
+                                    renderOption={(props, option) => (
+                                        <Box {...props} key={option.CREATOR_ID} sx={{
+                                            backgroundColor: '#fff',
+                                            '&:hover': {
+                                                backgroundColor: '#dcdcdc',
+                                                opacity: [0.9, 0.8, 0.7],
+                                            },
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            {option.ORG_NAME ? option.ORG_NAME : option.FIRSTNAME + ' '+ option.LASTNAME}
+                                        </Box>
+                                    )}
+                                    onChange={(event, newValue) => {
+                                        const selectedCreator = possibleCreator.find(
+                                            (client) => client.CREATOR_ID === newValue.CREATOR_ID
+                                        );
+                                        setFormData(prevState => ({...prevState, creatorId: selectedCreator.CREATOR_ID}));
+                                    }}
+                                    onInputChange={(e, value) => setCreatorId(value)}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Client"
+                                            InputLabelProps={{
+                                                style: {textAlign: 'center'},
+                                                shrink: true
+                                            }}
+                                            required
+                                            size="small"
+                                            style={{background: "white"}}
+                                        />
+                                    )}
+                                />
+                            </FormControl>
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
+                                required={false}
                                 label={"Lien boutique"}
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     creatorLink: e.target.value,
                                 }))}
                                 value={formData?.creatorLink}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={2} className="mt-2" sx={{mt: '2vh'}}>
-                        <Grid item xs={6} container justifyContent="center" spacing={2}>
-                            <Grid item>
-                                <IconButton
-                                    onClick={() => setSelectedSocial(prevState => ({
-                                        instagram: !prevState.instagram,
-                                        facebook: false,
-                                        pinterest: false,
-                                    }))}
-                                    sx={{
-                                        color: selectedSocial.instagram ? 'primary.main' : 'grey.500',
-                                    }}
-                                >
-                                    <InstagramIcon/>
-                                </IconButton>
-                            </Grid>
-                            <Grid item>
-                                <IconButton
-                                    onClick={() => setSelectedSocial(prevState => ({
-                                        instagram: false,
-                                        facebook: !prevState.facebook,
-                                        pinterest: false,
-                                    }))}
-                                    sx={{
-                                        color: selectedSocial.facebook ? 'primary.main' : 'grey.500',
-                                    }}
-                                >
-                                    <FacebookIcon/>
-                                </IconButton>
-                            </Grid>
-                            <Grid item>
-                                <IconButton
-                                    onClick={() => setSelectedSocial(prevState => ({
-                                        instagram: false,
-                                        facebook: false,
-                                        pinterest: !prevState.pinterest,
-                                    }))}
-                                    sx={{
-                                        color: selectedSocial.pinterest ? 'primary.main' : 'grey.500',
-                                    }}
-                                >
-                                    <PinterestIcon/>
-                                </IconButton>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <CustomTextField
-                                label={"Lien réseau"}
-                                onChange={e => handleSocial(e)}
-                                value={handleSocialValue()}
-                                disable={!selectedSocial.instagram && !selectedSocial.facebook && !selectedSocial.pinterest}
                             />
                         </Grid>
                     </Grid>
@@ -262,6 +278,10 @@ const AddProduct = () => {
                     </Button>
                 </Box>
             </Grid>
+            {(error.email || error.password) && <Alert severity="error">
+                <AlertTitle>Erreur</AlertTitle>
+                {error.message}
+            </Alert>}
         </Grid>
     );
 };

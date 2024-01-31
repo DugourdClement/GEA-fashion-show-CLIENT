@@ -1,14 +1,19 @@
-import {Box, Card, Typography} from "@mui/material";
-import domus from "../components/asset/domus.png"
-import associationFenetres from "../components/asset/associationFenetres.png"
-import lauralba from "../components/asset/lauralba.png"
-import lepopee from "../components/asset/lepopee.png"
-import medinsoft from "../components/asset/medinsoft.png"
-import olympicLocation from "../components/asset/olympicLocation.png"
-import studioKaroDanse from "../components/asset/studioKaroDanse.png"
-import theCamp from "../components/asset/theCamp.png"
-import iutInfoAix from "../components/asset/iutInfoAix.jpg"
+import {Box, Card, CardMedia, Divider, Grid, Typography} from "@mui/material";
+import domus from "../components/asset/domus.png";
+import associationFenetres from "../components/asset/associationFenetres.png";
+import lauralba from "../components/asset/lauralba.png";
+import lepopee from "../components/asset/lepopee.png";
+import medinsoft from "../components/asset/medinsoft.png";
+import olympicLocation from "../components/asset/olympicLocation.png";
+import studioKaroDanse from "../components/asset/studioKaroDanse.png";
+import theCamp from "../components/asset/theCamp.png";
+import iutInfoAix from "../components/asset/iutInfoAix.jpg";
+import laCalade from "../components/asset/LaCalade.jpg";
 import React from "react";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import {IconLink} from "./shop/ProductCard";
 
 
 const partnerData = [
@@ -96,6 +101,42 @@ const PartnershipCreator = () => {
                     Créateurs
                 </Typography>
             </Box>
+            <Card sx={{p: '2vh', mb: '3vh', ml: '7vh', mr: '7vh'}}>
+                <Grid container sx={{display: "flex", alignItems: 'center'}}>
+                    <Grid item sx={{ml: '4vh'}}>
+                        <Typography variant='h2'>1</Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>
+                            <Divider orientation="vertical" sx={{height: '50px', bgcolor: 'primary.main'}}/>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Typography
+                            variant='h5'>Lycéé La Calade</Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                            <Grid container justifyContent='space-around'>
+                                <IconLink url='instagram lien' icon={<InstagramIcon/>}/>
+                                <IconLink url='facebook lien' icon={<FacebookIcon/>}/>
+                                <IconLink url='pinterest lien' icon={<PinterestIcon/>}/>
+                            </Grid>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={7} sm={7}>
+                        <CardMedia
+                            sx={{
+                                maxWidth: '100%',
+                                height: 'auto'
+                            }}
+                            component="img"
+                            image={laCalade}
+                            alt='Lycée La Calade'
+                        />
+                    </Grid>
+                </Grid>
+            </Card>
         </>
     );
 };

@@ -6,56 +6,59 @@ import {serverAPI} from "../../config/api";
 import usePOST from "../../hooks/usePOST";
 import ModalConfirmation from "./ModalConfirmation";
 
-const SeeProducts = () => {
+const SeeCreator = () => {
     const [response, setRequest] = useGET({url: '', data: {}, api: serverAPI});
     const [responsePost, setPostRequest] = usePOST({url: '', data: {}, api: serverAPI});
 
     const [error, setError] = useState({status: false, message: ""});
-    const [allProducts, setAllProduct] = useState([]);
+    const [allCreator, setAllCreator] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [productToDelete, setProductToDelete] = useState(null);
+    const [creatorToDelete, setCreatorToDelete] = useState(null);
 
     useEffect(() => {
-        setRequest({url: `ProductController.php?productAdmin=c`, data: {}, api: serverAPI});
+        setRequest({url: `CreatorController.php`, data: {}, api: serverAPI});
     }, []);
 
     useEffect(() => {
         if(response) {
             if (response?.data) {
-                setAllProduct(response.data);
-                console.log(response.data)
+                setAllCreator(response.data);
             } else if (response) {
-                setError({status: true, message: "Une erreur c'est produite lors de la récupération des produits."});
+                setError({status: true, message: "Une erreur c'est produite lors de la récupération des créateurs."});
             }
         }
-    }, [response, setAllProduct]);
+    }, [response, setAllCreator]);
 
     useEffect(() => {
         if(responsePost) {
             if (responsePost?.data) {
-                setAllProduct(allProducts.filter(creator => creator[0] !== productToDelete[0]))
+                setAllCreator(allCreator.filter(creator => creator.CREATOR_ID !== creatorToDelete.CREATOR_ID))
             } else if (responsePost) {
-                setError({status: true, message: "Une erreur c'est produite lors de la mise à jour du produit."});
+                setError({status: true, message: "Une erreur c'est produite lors de la mise à jour du créateur."});
             }
         }
     }, [responsePost]);
 
-    const deleteHandler = (name) => {
-        const targetCreator = allProducts.find(creator => creator[1] === name);
-        setProductToDelete(targetCreator);
+    const deleteHandler = (num_passage) => {
+        const targetCreator = allCreator.find(creator => creator.NUM_PASSAGE === num_passage);
+        setCreatorToDelete(targetCreator);
         setIsOpen(true);
     };
 
     const deleteConfirm = () => {
-        setPostRequest(prevState => ({...prevState, url: 'ProductController.php', data: {product_id: productToDelete[0]}}))
+        setPostRequest(prevState => ({...prevState, url: 'CreatorController.php', data: {CREATOR_ID: creatorToDelete.CREATOR_ID}}))
         setIsOpen(false);
     };
 
     const columns = [
+        'Passage',
+        'Type',
+        'Nom org',
+        'Prenom',
         'Nom',
-        'Prix',
-        'Créateur',
-        'Lien',
+        'Pole gérant',
+        'Email',
+        'Tenues',
         {
             name: "active", label: "Action", options: {
                 filter: true, sort: true, customBodyRender: (value, tableMeta) => {
@@ -76,18 +79,23 @@ const SeeProducts = () => {
         selectableRows: 'none',
     };
 
-    const data = allProducts?.map(product => [
-        product[1],
-        product[2],
-        product[5] ? product[5] : product[6] + ' ' + product[7],
-        product[3],
-    ]);
+    console.log(allCreator)
+    const data = allCreator.length !== 0 ? allCreator.map(creator => [
+        creator.NUM_PASSAGE,
+        creator.ORG_NAME ? 'Organisation' : 'Indépendant',
+        creator.ORG_NAME && creator.ORG_NAME,
+        creator.FIRSTNAME,
+        creator.LASTNAME,
+        creator.GERANT,
+        creator.EMAIL,
+        creator.NB_TENUES,
+    ]) : [];
 
     return (
         <Grid>
-            <ModalConfirmation isOpen={isOpen} setIsOpen={setIsOpen} deleteConfirm={deleteConfirm} text={'Si vous poursouvez, le produit sera définitivement supprimé.'}/>
+            <ModalConfirmation isOpen={isOpen} setIsOpen={setIsOpen} deleteConfirm={deleteConfirm} text={'Si vous poursouvez, le créateur sera définitivement supprimé ainsi que tous ces produits.'}/>
             <MUIDataTable
-                title={'Tous les Produits'}
+                title={'Tous les Créateur'}
                 data={data}
                 columns={columns}
                 options={options}
@@ -100,4 +108,4 @@ const SeeProducts = () => {
     );
 };
 
-export default SeeProducts;
+export default SeeCreator;
