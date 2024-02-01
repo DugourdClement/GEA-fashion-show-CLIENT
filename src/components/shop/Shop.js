@@ -147,10 +147,10 @@ const Shop = () => {
         <Card sx={{ maxWidth: '90%', margin: 'auto', mt: 5, mb: 5, p: '2vh', background: "#f7f7f7" }}>
             {images.map((creator, index) =>
             (<React.Fragment key={index}>
-                <Typography variant="h4" sx={{ p: '2vh', fontFamily: "Roboto Condensed, sans-serif" }}>{creator.creator}</Typography>
-                {creator.products.map((product) => (
+                <Typography variant="h4" sx={{ p: '2vh', fontFamily: "Roboto Condensed, sans-serif" }}>{creator[1] ? creator[1] : creator[2] + ' ' + creator[3]}</Typography>
+                {creator[4].map((product) => (
                     <Card
-                        key={product.id}
+                        key={product.productId}
                         sx={{
                             mt: '2vh',
                             mb: '2vh',
@@ -158,11 +158,10 @@ const Shop = () => {
                             height: 'auto',
 
                         }}>
-                        {(openCardIndex !== product.id || openCardIndex === null) ?
-                            <PreviewCard product={product} productIndex={product.id} image={product.image}
-                                toggleCard={toggleCard} />
+                        {(openCardIndex !== product.productId || openCardIndex === null) ?
+                            <PreviewCard product={product} productIndex={product.productId}  toggleCard={toggleCard}/>
                             :
-                            <ExtendedProduct productIndex={product.id} product={product} />}
+                            <ExtendedProduct productIndex={product.productId} product={product}/>}
                     </Card>
                 ))}
             </React.Fragment>))}

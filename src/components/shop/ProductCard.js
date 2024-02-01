@@ -264,7 +264,7 @@ export const PreviewCard = ({product, productIndex, toggleCard}) => {
                 minWidth: '50vh'
             }}>
                 <ImageCarousel images={product.pictures} onClick={handleCarouselClick}/>
-            </Grid>
+            </Box>
             <Grid item xs={1}>
                 <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>
                     <Divider orientation="vertical" sx={{height: 'inherit'}}/>
@@ -278,6 +278,6 @@ export const PreviewCard = ({product, productIndex, toggleCard}) => {
                     </Typography>
                 </Box>
             </Grid>
-        </Grid>
+        </Box>
     );
 };
