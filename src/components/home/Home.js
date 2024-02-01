@@ -2,7 +2,6 @@ import {
     Box,
     Typography,
     List,
-    ListItem,
     ListItemText,
     ListItemAvatar,
     Avatar,
