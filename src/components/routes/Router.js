@@ -1,5 +1,5 @@
-import {lazy} from "react";
-import {Navigate} from "react-router-dom";
+import { lazy } from "react";
+import { Navigate } from "react-router-dom";
 import SecuredRoute from "./SecuredRoute";
 
 const FullLayout = lazy(() => import("../layout/Layout"));
@@ -16,19 +16,18 @@ const AdminConsole = lazy(() => import("../admin/AdminConsole"));
 const ThemeRoutes = [
     {
         path: "/",
-        element: <FullLayout/>,
+        element: <FullLayout />,
         children: [
-            {path: "/", element: <Navigate to="/accueil"/>},
-            {path: "/connection", exact: true, element: <SignIn/>},
-            {path: "/accueil", exact: true, element: <Home/>},
-            {path: "/qui-sommes-nous", exact: true, element: <WhoAreWe/>},
-            {path: "/organisation", exact: true, element: <EventDetails/>},
-            {path: "/partenariats&créateurs", exact: true, element: <PartnershipCreator/>},
-            {path: "/boutique", exact: true, element: <Shop/>},
-            {path: "/billeterie", exact: true, element: <Tickets/>},
-            {path: "/admin", exact: true, element: <AdminConsole/>},
+            { path: "", element: <Navigate to="accueil" /> },
+            { path: "connection", exact: true, element: <SignIn /> },
+            { path: "accueil", exact: true, element: <Home /> },
+            { path: "qui-sommes-nous", exact: true, element: <WhoAreWe /> },
+            { path: "organisation", exact: true, element: <EventDetails /> },
+            { path: "partenariats&créateurs", exact: true, element: <PartnershipCreator /> },
+            { path: "boutique", exact: true, element: <Shop /> },
+            { path: "admin", exact: true, element: <AdminConsole /> },
             {
-                path: "/administration", exact: true, element: <SecuredRoute childrenName="Home" children={<AdminConsole/>}></SecuredRoute>
+                path: "administration", exact: true, element: <SecuredRoute childrenName="Home" children={<AdminConsole />}></SecuredRoute>
             },
         ],
     },

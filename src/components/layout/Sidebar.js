@@ -32,8 +32,13 @@ const Sidebar = () => {
     };
 
     const navigationHandler = (target) => {
-        navigate(target)
         setOpen(false);
+
+        if (target === "/billeterie") {
+            window.location.href = "https://www.helloasso.com/associations/associationfenetres/evenements/place-defile-somebodylikeyou";
+        } else {
+            navigate(target);
+        }
     };
 
     return (
