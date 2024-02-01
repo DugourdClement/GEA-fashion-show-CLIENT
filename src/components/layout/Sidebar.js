@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Drawer,
     List,
@@ -23,6 +23,23 @@ const navigationItems = [
 const drawerWidth = '51vh';
 
 const Sidebar = () => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const sidebarWidth = windowWidth < 800 ? "20vw" : "15vh";
+
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -45,7 +62,7 @@ const Sidebar = () => {
         <>
             <Card
                 sx={{
-                    width: '15vh',
+                    width: sidebarWidth,
                     height: '100vh',
                     position: 'fixed',
                     zIndex: 1,
@@ -96,7 +113,7 @@ const Sidebar = () => {
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         position: 'relative',
-                        left: open ? '15vh' : `-${drawerWidth}`,
+                        left: open ? sidebarWidth : `-${drawerWidth}`,
                         zIndex: 2,
                         boxSizing: 'border-box',
                         backgroundColor: '#333',

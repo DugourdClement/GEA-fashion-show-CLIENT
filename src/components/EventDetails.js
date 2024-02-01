@@ -27,9 +27,13 @@ const EventDetails = () => {
         };
     }, []);
 
+    const titleSize = windowWidth < 800 ? "4em" : "6em";
+    const fontSizeText = windowWidth < 800 ? "16px" : "20px";
     const flexDirection = windowWidth < 1000 ? "column" : "row";
     const imgWidth = windowWidth < 1000 ? "50vw" : "400px";
     const mapWidth = windowWidth < 800 ? "70vw" : "100vh";
+    const mapHeight = windowWidth < 800 ? "70vw" : "100vh";
+    const boxHeight = windowWidth < 800 ? "90vw" : "100vh"
 
     return (
         <Box sx={{
@@ -47,7 +51,7 @@ const EventDetails = () => {
             }}>
                 <Typography sx={{
                     margin: "0 15vw",
-                    fontSize: "6em",
+                    fontSize: titleSize,
                     fontWeight: "300",
                     color: "#000",
                     lineHeight: "86px",
@@ -67,7 +71,7 @@ const EventDetails = () => {
             }}>
                 <Typography sx={{
                     textAlign: "center",
-                    fontSize: "20px",
+                    fontSize: fontSizeText,
                     fontFamily: "Roboto Condensed, sans-serif",
                     margin: "0 15vw"
                 }}>
@@ -102,10 +106,17 @@ const EventDetails = () => {
                         fontWeight: "300",
                         lineHeight: "86px",
                         fontFamily: "Roboto Condensed, sans-serif",
+                        marginLeft: "10vw"
                     }}>
                         Planning
                     </Typography>
-                    <ListItem sx={{ width: "400px" }}>
+                    <Box sx={{
+                        width: "400px",
+                        margin: "0 5vh",
+                        display: "flex",
+                        flexDirection: flexDirection,
+                        alignItems: "flex-start"
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
                                 <RadioButtonUncheckedIcon />
@@ -117,42 +128,46 @@ const EventDetails = () => {
                                 <RadioButtonUncheckedIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{ width: "200px" }} primary="21h" secondary="Fin du défilé" />
-                    </ListItem>
-                    <ListItem sx={{ width: "400px" }}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <RadioButtonUncheckedIcon />
-                            </Avatar>
-                        </ListItemAvatar>
                         <ListItemText sx={{ width: "200px" }} primary="19h" secondary="Tombola" />
                         <ListItemAvatar>
                             <Avatar>
                                 <RadioButtonUncheckedIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{ width: "200px" }} primary="21h30" secondary="Annonce du lot et du gagant" />
-                    </ListItem>
-                    <ListItem sx={{ width: "400px" }}>
+                        <ListItemText sx={{ width: "200px" }} primary="20h" secondary="Début du défilé" />
+                    </Box>
+                    <Box sx={{
+                        width: "400px",
+                        margin: "0 5vh",
+                        display: "flex",
+                        flexDirection: flexDirection,
+                        alignItems: "flex-start"
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
                                 <RadioButtonUncheckedIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{ width: "200px" }} primary="20h" secondary="Début du défilé" />
+                        <ListItemText sx={{ width: "200px" }} primary="21h" secondary="Fin du défilé" />
+                        <ListItemAvatar>
+                            <Avatar>
+                                <RadioButtonUncheckedIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText sx={{ width: "200px" }} primary="21h30" secondary="Annonce du lot et du gagant" />
                         <ListItemAvatar>
                             <Avatar>
                                 <RadioButtonUncheckedIcon />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText sx={{ width: "200px" }} primary="22h" secondary="Fin de l'évènement" />
-                    </ListItem>
+                    </Box>
                 </List>
                 <img src={espaceBargemon} style={{ width: imgWidth, marginTop: "5vh" }} />
             </Box>
             <Box sx={{
                 width: "100%",
-                height: "100vh",
+                height: boxHeight,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -167,9 +182,7 @@ const EventDetails = () => {
                         fontFamily: "Roboto Condensed, sans-serif",
                     }}>
                     Plan d'accès</Typography>
-                <Card sx={{
-                    height: '80vh', width: mapWidth, mb: '5vh'
-                }}>
+                <Card sx={{ height: mapHeight, width: mapWidth, mb: '5vh' }}>
                     <MapContainer center={[43.297042433176244, 5.370310174049631]} zoom={13} scrollWheelZoom={false}
                         style={{ height: '100%', width: '100%', padding: '2vh' }}>
                         <TileLayer

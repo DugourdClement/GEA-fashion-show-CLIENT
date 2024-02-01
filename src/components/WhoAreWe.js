@@ -22,7 +22,7 @@ const WhoAreWe = () => {
 
     const flexDirection = windowWidth < 1300 ? "column" : "row";
     const titleMargin = windowWidth < 800 ? "5vw 20vw" : "5vh 30vh 10vh 20vh"
-    const bodyMargin = windowWidth < 800 ? "0 10vh" : "5vh 30vh 10vh 20vh"
+    const bodyMargin = windowWidth < 800 ? "0 5vh" : "5vh 30vh 10vh 20vh"
     const titleSize = windowWidth < 800 ? "4em" : "6em"
     const fontSizeText = windowWidth < 800 ? "16px" : "20px";
     const marginRight = windowWidth < 1300 ? "0" : "5vw"
@@ -116,10 +116,10 @@ const WhoAreWe = () => {
                     flexDirection: flexDirection,
                     alignItems: "center",
                 }}>
-                    <img src={previousEdition} style={{ width: "300px", marginBottom: "5vh" }} />
+                    <img src={previousEdition} style={{ width: imgWidth, marginBottom: "5vh" }} />
                     <Typography sx={{
                         fontFamily: "Roboto Condensed, sans-serif",
-                        fontSize: "1.2em",
+                        fontSize: fontSizeText,
                         lineHeight: "25px",
                         margin: "0 5vw",
                         textAlign: "justify",

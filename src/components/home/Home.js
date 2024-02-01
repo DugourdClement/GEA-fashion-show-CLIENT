@@ -39,6 +39,10 @@ const Home = () => {
     const fontSizeText = windowWidth < 800 ? "16px" : "20px";
     const imgWidth = windowWidth < 800 ? "50vw" : "500px";
     const mapWidth = windowWidth < 800 ? "70vw" : "100vh";
+    const mapHeight = windowWidth < 800 ? "90vw" : "100vh";
+    const bodyMargin = windowWidth < 800 ? "2vh 5vh" : "10vh 0";
+    const flexDirection = windowWidth < 800 ? "column" : "row";
+    const boxHeight = windowWidth < 800 ? "60vh" : "40vh";
 
     return (
         <Box sx={{
@@ -80,7 +84,7 @@ const Home = () => {
             <Box sx={{
                 width: "100%",
                 display: "flex",
-                margin: "10vh 0",
+                margin: bodyMargin,
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
@@ -161,7 +165,7 @@ const Home = () => {
             </Box>
             <Box sx={{
                 width: "100%",
-                height: "40vh",
+                height: boxHeight,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -169,7 +173,12 @@ const Home = () => {
                 background: "#f7f7f7",
             }}>
                 <List sx={{ width: '50vw', backgroundColor: '#fff' }}>
-                    <ListItem>
+                    <Box sx={{
+                        margin: "2vh",
+                        display: "flex",
+                        flexDirection: flexDirection,
+                        alignItems: "center"
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
                                 <LocationOnIcon />
@@ -182,8 +191,13 @@ const Home = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText sx={{ width: "80px" }} primary="Date" secondary="15 Mars" />
-                    </ListItem>
-                    <ListItem>
+                    </Box>
+                    <Box sx={{
+                        margin: "2vh",
+                        display: "flex",
+                        flexDirection: flexDirection,
+                        alignItems: "center"
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
                                 <WatchLaterIcon />
@@ -196,7 +210,7 @@ const Home = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText sx={{ width: "80px" }} primary="Fin" secondary="22h30" />
-                    </ListItem>
+                    </Box>
                 </List>
             </Box>
             <Box sx={{
@@ -217,7 +231,7 @@ const Home = () => {
                         fontFamily: "Roboto Condensed, sans-serif",
                     }}>
                     Plan d'accès</Typography>
-                <Card sx={{ height: '100vh', width: mapWidth, mb: '5vh' }}>
+                <Card sx={{ height: mapHeight, width: mapWidth, mb: '5vh' }}>
                     <MapContainer center={[43.297042433176244, 5.370310174049631]} zoom={13} scrollWheelZoom={false}
                         style={{ height: '100%', width: '100%', padding: '2vh' }}>
                         <TileLayer

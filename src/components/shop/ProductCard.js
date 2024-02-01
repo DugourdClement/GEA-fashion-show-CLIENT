@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Box,
     Button,
@@ -17,6 +17,8 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import FacebookIcon from '@mui/icons-material/Facebook';
+
+
 
 const TruncatedLink = ({ url, text }) => {
     return (
@@ -57,6 +59,24 @@ export const ImageCarousel = ({
     images, onClick = () => {
     }
 }) => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const carousselWidth = windowWidth < 1000 ? "80vw" : "450px";
+    const carousselHeight = windowWidth < 1000 ? "auto" : "300px";
+
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlePrev = () => {
@@ -72,14 +92,16 @@ export const ImageCarousel = ({
         console.log(activeIndex)
     };
 
+
+
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={e => onClick(e)}>
+        <Box sx={{ display: 'flex', alignItems: 'center', width: carousselWidth, height: carousselHeight }} onClick={e => onClick(e)}>
             <Button onClick={handlePrev}>
                 <ArrowBackIosNewIcon />
             </Button>
             <Card>
                 <CardMedia
-                    sx={{ width: "500px", height: "50vh" }}
+                    sx={{ width: "100%" }}
                     component="img"
                     image={images[activeIndex]}
                     alt={`Image ${activeIndex + 1}`}
@@ -201,14 +223,14 @@ export const ExtendedProduct = ({ product }) => {
                     </Box>
                 </Grid>
             </Grid >
-            <Grid sx={{ p: '2vh', pl: '7vh', pr: '7vh' }}>
+            <Box sx={{ display: 'flex', flexDirection: "column", alignItems: 'center', height: '100%', padding: "20px" }}>
                 <Typography variant='h5' sx={{ mt: '5vh', fontFamily: "Roboto Condensed, sans-serif" }}>Description</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Typography variant="body1" sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
                         {product.description}
                     </Typography>
                 </Box>
-            </Grid>
+            </Box>
             {
                 product.history &&
                 <Grid sx={{ p: '2vh', mb: '3vh', pl: '7vh', pr: '7vh' }}>
@@ -230,29 +252,39 @@ export const PreviewCard = ({ product, productIndex, toggleCard }) => {
         event.stopPropagation();
     };
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const flexDirection = windowWidth < 1000 ? "column" : "row";
+    const dividerDisplay = windowWidth < 1000 ? "none" : "default";
+
     return (
-        <Grid container onClick={() => toggleCard(productIndex)} sx={{ cursor: 'pointer', }}>
-            <Grid item xs={4} sx={{
+        <Box container onClick={() => toggleCard(productIndex)} sx={{ cursor: 'pointer', display: "flex", flexDirection: flexDirection, alignItems: "center" }}>
+            <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '50vh'
             }}>
                 <ImageCarousel images={product.img} onClick={handleCarouselClick} />
-            </Grid>
-            <Grid item xs={1}>
-                <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
-                    <Divider orientation="vertical" sx={{ height: 'inherit' }} />
-                </Box>
-            </Grid>
-            <Grid item xs={6}>
-                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    <Typography variant="body"
-                        sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
-                        {product.description}
-                    </Typography>
-                </Box>
-            </Grid>
-        </Grid>
+            </Box>
+            <Divider orientation="vertical" sx={{ display: dividerDisplay, height: "300px", width: "3px", color: "#333000" }} />
+            <Box sx={{ display: 'flex', alignItems: 'center', height: '100%', padding: "20px" }}>
+                <Typography variant="body"
+                    sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
+                    {product.description}
+                </Typography>
+            </Box>
+        </Box>
     );
 };
