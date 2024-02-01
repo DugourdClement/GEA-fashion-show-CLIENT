@@ -20,9 +20,10 @@ const SeeCreator = () => {
     }, []);
 
     useEffect(() => {
-        if(response) {
-            if (response?.data) {
+        if (response) {
+            if (Array.isArray(response?.data)) {
                 setAllCreator(response.data);
+                setError({status: false, message: ""});
             } else if (response) {
                 setError({status: true, message: "Une erreur c'est produite lors de la récupération des créateurs."});
             }
@@ -30,7 +31,7 @@ const SeeCreator = () => {
     }, [response, setAllCreator]);
 
     useEffect(() => {
-        if(responsePost) {
+        if (responsePost) {
             if (responsePost?.data) {
                 setAllCreator(allCreator.filter(creator => creator.CREATOR_ID !== creatorToDelete.CREATOR_ID))
             } else if (responsePost) {
@@ -46,7 +47,11 @@ const SeeCreator = () => {
     };
 
     const deleteConfirm = () => {
-        setPostRequest(prevState => ({...prevState, url: 'CreatorController.php', data: {CREATOR_ID: creatorToDelete.CREATOR_ID}}))
+        setPostRequest(prevState => ({
+            ...prevState,
+            url: 'CreatorController.php',
+            data: {CREATOR_ID: creatorToDelete.CREATOR_ID}
+        }))
         setIsOpen(false);
     };
 
@@ -69,7 +74,10 @@ const SeeCreator = () => {
                                    sx={{cursor: "pointer"}}/>
                         );
                     }
-                }
+                },
+                setCellProps: () => ({
+                    style: {justifyContent: 'center', display: 'flex', flexDirection: 'row'}
+                }),
             }
         },
     ];
@@ -92,18 +100,21 @@ const SeeCreator = () => {
     ]) : [];
 
     return (
-        <Grid>
-            <ModalConfirmation isOpen={isOpen} setIsOpen={setIsOpen} deleteConfirm={deleteConfirm} text={'Si vous poursouvez, le créateur sera définitivement supprimé ainsi que tous ces produits.'}/>
-            <MUIDataTable
-                title={'Tous les Créateur'}
-                data={data}
-                columns={columns}
-                options={options}
-            />
-            {(error.email || error.password) && <Alert severity="error">
-                <AlertTitle>Erreur</AlertTitle>
-                {error.message}
-            </Alert>}
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ModalConfirmation isOpen={isOpen} setIsOpen={setIsOpen} deleteConfirm={deleteConfirm}
+                                   text={'Si vous poursouvez, le créateur sera définitivement supprimé ainsi que tous ces produits.'}/>
+                <MUIDataTable
+                    title={'Tous les créateurs'}
+                    data={data}
+                    columns={columns}
+                    options={options}
+                />
+                {error.status && <Alert severity="error">
+                    <AlertTitle>Erreur</AlertTitle>
+                    {error.message}
+                </Alert>}
+            </Grid>
         </Grid>
     );
 };

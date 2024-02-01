@@ -20,10 +20,10 @@ const SeeProducts = () => {
     }, []);
 
     useEffect(() => {
-        if(response) {
-            if (response?.data) {
+        if (response) {
+            if (Array.isArray(response?.data)) {
                 setAllProduct(response.data);
-                console.log(response.data)
+                setError({status: false, message: ""});
             } else if (response) {
                 setError({status: true, message: "Une erreur c'est produite lors de la récupération des produits."});
             }
@@ -31,7 +31,7 @@ const SeeProducts = () => {
     }, [response, setAllProduct]);
 
     useEffect(() => {
-        if(responsePost) {
+        if (responsePost) {
             if (responsePost?.data) {
                 setAllProduct(allProducts.filter(creator => creator[0] !== productToDelete[0]))
             } else if (responsePost) {
@@ -47,7 +47,11 @@ const SeeProducts = () => {
     };
 
     const deleteConfirm = () => {
-        setPostRequest(prevState => ({...prevState, url: 'ProductController.php', data: {product_id: productToDelete[0]}}))
+        setPostRequest(prevState => ({
+            ...prevState,
+            url: 'ProductController.php',
+            data: {product_id: productToDelete[0]}
+        }))
         setIsOpen(false);
     };
 
@@ -66,7 +70,10 @@ const SeeProducts = () => {
                                    sx={{cursor: "pointer"}}/>
                         );
                     }
-                }
+                },
+                setCellProps: () => ({
+                    style: {justifyContent: 'center', display: 'flex', flexDirection: 'row'}
+                }),
             }
         },
     ];
@@ -84,18 +91,21 @@ const SeeProducts = () => {
     ]);
 
     return (
-        <Grid>
-            <ModalConfirmation isOpen={isOpen} setIsOpen={setIsOpen} deleteConfirm={deleteConfirm} text={'Si vous poursouvez, le produit sera définitivement supprimé.'}/>
-            <MUIDataTable
-                title={'Tous les Produits'}
-                data={data}
-                columns={columns}
-                options={options}
-            />
-            {(error.email || error.password) && <Alert severity="error">
-                <AlertTitle>Erreur</AlertTitle>
-                {error.message}
-            </Alert>}
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ModalConfirmation isOpen={isOpen} setIsOpen={setIsOpen} deleteConfirm={deleteConfirm}
+                                   text={'Si vous poursouvez, le produit sera définitivement supprimé.'}/>
+                <MUIDataTable
+                    title={'Tous les Produits'}
+                    data={data}
+                    columns={columns}
+                    options={options}
+                />
+                {error.status && <Alert severity="error">
+                    <AlertTitle>Erreur</AlertTitle>
+                    {error.message}
+                </Alert>}
+            </Grid>
         </Grid>
     );
 };

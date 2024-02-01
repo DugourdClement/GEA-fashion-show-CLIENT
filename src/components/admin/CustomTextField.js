@@ -1,19 +1,15 @@
 import {TextField} from "@mui/material";
 
-const CustomTextField = ({label, required = true, onChange, value, style, disable = false}) => {
+const CustomTextField = ({onChange, value, ...props}) => {
     return (
         <TextField
             fullWidth
-            disabled={disable}
-            multiline
-            label={label}
             InputLabelProps={{
                 style: {textAlign: 'center'},
                 shrink: true
             }}
             size="small"
-            {...style}
-            required={required}
+            {...props}
             onChange={e => onChange(e)}
             sx={{background: "white",}}
             value={value !== undefined ? value : ''}

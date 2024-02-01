@@ -7,7 +7,8 @@ import useGET from "../../hooks/useGET";
 import FormControl from "@mui/material/FormControl";
 
 const initialState = {
-    size: {xs: false, s: false, m: false, l: false, xl: false}
+    size: {xs: false, s: false, m: false, l: false, xl: false},
+    images: [],
 };
 
 const AddProduct = () => {
@@ -42,9 +43,10 @@ const AddProduct = () => {
     }, [setRequest, creatorId]);
 
     useEffect(() => {
-        if(response) {
+        if (response) {
             if (response?.data) {
                 setPossibleCreator(response.data);
+                setError({status: false, message: ""});
                 console.log(response.data)
             } else if (response) {
                 setError({status: true, message: "Une erreur c'est produite lors de la récupération des créateurs."});
@@ -53,10 +55,10 @@ const AddProduct = () => {
     }, [response, setPossibleCreator]);
 
     useEffect(() => {
-        if(responsePost) {
+        if (responsePost) {
             if (responsePost?.data === true) {
                 setFormData(initialState);
-                console.log(responsePost.data)
+                setError({status: false, message: ""});
             } else if (responsePost) {
                 setError({status: true, message: "Une erreur c'est produite lors de l'ajout du produit'."});
             }
@@ -72,15 +74,34 @@ const AddProduct = () => {
         );
 
         if (imageFiles.length !== files.length) {
-            alert('Only image files are allowed.');
+            alert('Seulement les images sont autorisées.');
         } else
             setSelectedFiles(prevState => ({...prevState, imageFiles}));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData)
-        setPostRequest({url: 'ProductController.php', data: formData, api: serverAPI});
+
+        const objFormData = new FormData();
+
+        selectedFiles.imageFiles.forEach((file, index) => {
+            objFormData.append(`images[${index}]`, file);
+        });
+
+        Object.keys(formData).forEach(key => {
+            if (key !== 'images' && key !== 'size') {
+                objFormData.append(key, formData[key]);
+            }
+        });
+
+        Object.values(formData.size).forEach(value => {
+            objFormData.append('size[]', value); // Append each boolean value under 'size[]'
+        });
+
+        for (let [key, value] of objFormData.entries()) {
+            console.log(key, value);
+        }
+        setPostRequest({url: 'ProductController.php', data: objFormData, api: serverAPI});
     };
 
     return (
@@ -93,7 +114,8 @@ const AddProduct = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <CustomTextField
-                                label={"Nom produit"}
+                                label="Nom produit"
+                                required
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     name: e.target.value,
@@ -103,7 +125,9 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                label={"Prix"}
+                                label="Prix"
+                                type="number"
+                                required
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     price: e.target.value,
@@ -162,8 +186,7 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                required={false}
-                                label={"Matières"}
+                                label="Matières"
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     materials: e.target.value,
@@ -175,8 +198,8 @@ const AddProduct = () => {
                     <Grid container spacing={2} className="mt-2" sx={{mt: '2vh'}}>
                         <Grid item xs={6}>
                             <CustomTextField
-                                required={false}
-                                label={"Description"}
+                                label="Description"
+                                multiline
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     description: e.target.value,
@@ -186,8 +209,8 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                required={false}
-                                label={"Histoire"}
+                                label="Histoire"
+                                multiline
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     history: e.target.value,
@@ -218,20 +241,23 @@ const AddProduct = () => {
                                             },
                                             textTransform: 'uppercase'
                                         }}>
-                                            {option.ORG_NAME ? option.ORG_NAME : option.FIRSTNAME + ' '+ option.LASTNAME}
+                                            {option.ORG_NAME ? option.ORG_NAME : option.FIRSTNAME + ' ' + option.LASTNAME}
                                         </Box>
                                     )}
                                     onChange={(event, newValue) => {
                                         const selectedCreator = possibleCreator.find(
                                             (client) => client.CREATOR_ID === newValue.CREATOR_ID
                                         );
-                                        setFormData(prevState => ({...prevState, creatorId: selectedCreator.CREATOR_ID}));
+                                        setFormData(prevState => ({
+                                            ...prevState,
+                                            creatorId: selectedCreator.CREATOR_ID
+                                        }));
                                     }}
                                     onInputChange={(e, value) => setCreatorId(value)}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
-                                            label="Client"
+                                            label="Createur"
                                             InputLabelProps={{
                                                 style: {textAlign: 'center'},
                                                 shrink: true
@@ -246,8 +272,7 @@ const AddProduct = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                required={false}
-                                label={"Lien boutique"}
+                                label="Lien boutique"
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     creatorLink: e.target.value,
@@ -278,7 +303,7 @@ const AddProduct = () => {
                     </Button>
                 </Box>
             </Grid>
-            {(error.email || error.password) && <Alert severity="error">
+            {error.status && <Alert severity="error">
                 <AlertTitle>Erreur</AlertTitle>
                 {error.message}
             </Alert>}

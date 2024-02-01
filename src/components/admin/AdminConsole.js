@@ -36,12 +36,12 @@ const AdminConsole = () => {
                             Ajouter un produit
                         </Button>
                         <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
-                                onClick={() => setSelectedComponent('addCreator')} fullWidth>
-                            Ajouter un créateur
-                        </Button>
-                        <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
                                 onClick={() => setSelectedComponent('seeCreator')} fullWidth>
                             Tous les créateurs
+                        </Button>
+                        <Button variant="contained" sx={{margin: '0 0 1rem 0'}}
+                                onClick={() => setSelectedComponent('addCreator')} fullWidth>
+                            Ajouter un créateur
                         </Button>
                     </Grid>
                     <Grid item xs={12} sm={9} sx={{display: 'flex', justifyContent: 'center'}}>

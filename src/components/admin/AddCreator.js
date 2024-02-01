@@ -17,8 +17,8 @@ const AdminInfo = ({setFormData, formData, nameRequired = false}) => {
         <Grid container spacing={2}>
             <Grid item xs={4}>
                 <CustomTextField
+                    label="Nom"
                     required={nameRequired}
-                    label={"Nom"}
                     onChange={e => setFormData(prevState => ({
                         ...prevState,
                         lastname: e.target.value,
@@ -28,8 +28,7 @@ const AdminInfo = ({setFormData, formData, nameRequired = false}) => {
             </Grid>
             <Grid item xs={4}>
                 <CustomTextField
-                    label={"Prenom"}
-                    required={false}
+                    label="Prenom"
                     onChange={e => setFormData(prevState => ({
                         ...prevState,
                         firstname: e.target.value,
@@ -39,8 +38,7 @@ const AdminInfo = ({setFormData, formData, nameRequired = false}) => {
             </Grid>
             <Grid item xs={4}>
                 <CustomTextField
-                    label={"Membre du pôle gèrant"}
-                    required={false}
+                    label="Membre du pôle gèrant"
                     onChange={e => setFormData(prevState => ({
                         ...prevState,
                         gerant: e.target.value,
@@ -69,6 +67,7 @@ const AddCreator = () => {
         if(responsePost) {
             if (responsePost?.data === true) {
                 setFormData(initialState);
+                setError({status: false, message: ""});
             } else if (responsePost) {
                 setError({status: true, message: "Une erreur c'est produite lors de l'ajout' du créateur."});
             }
@@ -134,6 +133,7 @@ const AddCreator = () => {
                                 <Grid item xs={6}>
                                     <CustomTextField
                                         label={selectedType === 'collectif' ? "Nom du collectif" : "Nom de l'organisation"}
+                                        required
                                         onChange={e => setFormData(prevState => ({
                                             ...prevState,
                                             orgName: e.target.value,
@@ -147,7 +147,9 @@ const AddCreator = () => {
                     <Grid container spacing={2} className="mt-2" sx={{mt: '2vh'}}>
                         <Grid item xs={2}>
                             <CustomTextField
-                                label={"Numéro"}
+                                label="Numéro"
+                                required
+                                type="number"
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     number: e.target.value,
@@ -157,8 +159,7 @@ const AddCreator = () => {
                         </Grid>
                         <Grid item xs={5}>
                             <CustomTextField
-                                required={false}
-                                label={"Email"}
+                                label="Email"
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     mail: e.target.value,
@@ -168,8 +169,8 @@ const AddCreator = () => {
                         </Grid>
                         <Grid item xs={3}>
                             <CustomTextField
-                                required={false}
-                                label={"Téléphone"}
+                                label="Téléphone"
+                                type="number"
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     phoneNumber: e.target.value,
@@ -179,7 +180,9 @@ const AddCreator = () => {
                         </Grid>
                         <Grid item xs={2}>
                             <CustomTextField
-                                label={"Nombre de tenues"}
+                                label="Nombre de tenues"
+                                type="number"
+                                required
                                 onChange={e => setFormData(prevState => ({
                                     ...prevState,
                                     nbOutfits: e.target.value,
@@ -235,8 +238,7 @@ const AddCreator = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <CustomTextField
-                                required={false}
-                                label={"Lien réseau"}
+                                label="Lien réseau"
                                 onChange={e => handleSocial(e)}
                                 value={handleSocialValue()}
                                 disable={!selectedSocial.instagram && !selectedSocial.facebook && !selectedSocial.pinterest}
@@ -248,7 +250,7 @@ const AddCreator = () => {
                     </Button>
                 </Box>
             </Grid>
-            {(error.email || error.password) && <Alert severity="error">
+            {error.status && <Alert severity="error">
                 <AlertTitle>Erreur</AlertTitle>
                 {error.message}
             </Alert>}

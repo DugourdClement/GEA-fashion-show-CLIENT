@@ -131,6 +131,7 @@ const Shop = () => {
     useEffect(() => {
         if (response?.data) {
             setImages(response?.data[0].pictures[0]);
+            setError({status: false, message: ""});
             console.log(response.data)
         } else if (response) {
             setError({status: true, message: "Une erreur c'est produite lors de la récupération des produits."});
@@ -164,7 +165,7 @@ const Shop = () => {
                         </Card>
                     ))}
                 </React.Fragment>))}
-            {(error.email || error.password) && <Alert severity="error">
+            {error.status && <Alert severity="error">
                 <AlertTitle>Erreur</AlertTitle>
                 {error.message}
             </Alert>}
