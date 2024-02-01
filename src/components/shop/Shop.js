@@ -125,14 +125,14 @@ const Shop = () => {
     const [response, setRequest] = useGET({url: `ProductController.php`, data: {}, api: serverAPI});
 
     const [openCardIndex, setOpenCardIndex] = useState(null);
-    const [image, setImages] = useState(null);
+    const [products, setProducts] = useState(null);
     const [error, setError] = useState({status: false, message: ""});
 
     useEffect(() => {
         if (response?.data) {
-            setImages(response?.data[0].pictures[0]);
-            setError({status: false, message: ""});
             console.log(response.data)
+            setProducts(response.data);
+            setError({status: false, message: ""});
         } else if (response) {
             setError({status: true, message: "Une erreur c'est produite lors de la récupération des produits."});
         }
@@ -145,23 +145,23 @@ const Shop = () => {
 
     return (
         <Card sx={{maxWidth: '90%', margin: 'auto', mt: 5, mb: 5, p: '2vh', backgroundColor: 'gray'}}>
-            {images.map((creator, index) =>
+            {products?.map((creator, index) =>
                 (<React.Fragment key={index}>
-                    <Typography variant="h4" sx={{p: '2vh'}}>{creator.creator}</Typography>
-                    {creator.products.map((product) => (
+                    <Typography variant="h4"
+                                sx={{p: '2vh'}}>{creator[1] ? creator[1] : creator[2] + ' ' + creator[3]}</Typography>
+                    {creator[4].map((product) => (
                         <Card
-                            key={product.id}
+                            key={product.productId}
                             sx={{
                                 mt: '2vh',
                                 mb: '2vh',
                                 p: '1vh',
                                 height: 'auto'
                             }}>
-                            {(openCardIndex !== product.id || openCardIndex === null) ?
-                                <PreviewCard product={product} productIndex={product.id} image={product.image}
-                                             toggleCard={toggleCard}/>
+                            {(openCardIndex !== product.productId || openCardIndex === null) ?
+                                <PreviewCard product={product} productIndex={product.productId}  toggleCard={toggleCard}/>
                                 :
-                                <ExtendedProduct productIndex={product.id} product={product}/>}
+                                <ExtendedProduct productIndex={product.productId} product={product}/>}
                         </Card>
                     ))}
                 </React.Fragment>))}

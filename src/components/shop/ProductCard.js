@@ -53,7 +53,10 @@ export const IconLink = ({url, icon}) => {
     );
 };
 
-export const ImageCarousel = ({images, onClick = () => {}}) => {
+export const ImageCarousel = ({
+                                  images, onClick = () => {
+    }
+                              }) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlePrev = () => {
@@ -93,11 +96,17 @@ export const ExtendedProduct = ({product}) => {
     const [sizesOpen, setSizesOpen] = useState(false);
     const [materialsOpen, setMaterialsOpen] = useState(false);
 
+    const creatorLink = {
+        instagram: product.creator.instagram,
+        facebook: product.creator.facebook,
+        pinterest: product.creator.pinterest
+    }
+
     return (
         <>
             <Grid container sx={{mt: '5vh'}}>
                 <Grid item xs={6}>
-                    <ImageCarousel images={product.img}/>
+                    <ImageCarousel images={product.pictures}/>
                 </Grid>
                 <Grid item xs={1}>
                     <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>
@@ -105,51 +114,71 @@ export const ExtendedProduct = ({product}) => {
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    <Typography variant='h4'>{product.name}</Typography>
+                    <Typography variant='h4'>{product.productName}</Typography>
                     <Typography variant="body1" sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
                         {product.price} €
                     </Typography>
 
-                    <Typography variant='h5' sx={{mt: '4vh', backgroundColor: 'gray', borderRadius: '1vh', pl: '1vh', cursor: 'pointer'}}
+                    <Typography variant='h5' sx={{
+                        mt: '4vh',
+                        backgroundColor: 'gray',
+                        borderRadius: '1vh',
+                        pl: '1vh',
+                        cursor: 'pointer'
+                    }}
                                 onClick={() => setCreatorShopOpen(prevState => !prevState)}>
                         La boutique</Typography>
-                    {(creatorShopOpen && product.creatorLink) &&
-                        <TruncatedLink url={product.creatorLink} text={'Site du créateur'}/>
+                    {(creatorShopOpen && product.link) &&
+                        <TruncatedLink url={product.link} text={'Site du créateur'}/>
                     }
                     {creatorShopOpen &&
-                    <Divider variant='middle' sx={{mb: '2vh'}}/> }
+                        <Divider variant='middle' sx={{mb: '2vh'}}/>}
                     {creatorShopOpen &&
-                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh'}}>
+                        <Box
+                            sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh'}}>
                             <Grid container justifyContent='space-around'>
-                                {product.socials.instagramLink &&
-                                    <IconLink url={product.socials.instagramLink} icon={<InstagramIcon/>}/>}
-                                {product.socials.facebookLink &&
-                                    <IconLink url={product.socials.facebookLink} icon={<FacebookIcon/>}/>}
-                                {product.socials.pinterestLink &&
-                                    <IconLink url={product.socials.pinterestLink} icon={<PinterestIcon/>}/>}
+                                {creatorLink.instagram &&
+                                    <IconLink url={creatorLink.instagram} icon={<InstagramIcon/>}/>}
+                                {creatorLink.facebook &&
+                                    <IconLink url={creatorLink.facebook} icon={<FacebookIcon/>}/>}
+                                {creatorLink.pinterest &&
+                                    <IconLink url={creatorLink.pinterest} icon={<PinterestIcon/>}/>}
                             </Grid>
                         </Box>}
-                    <Typography variant='h5' sx={{mt: '2vh', backgroundColor: 'gray', borderRadius: '1vh', pl: '1vh', cursor: 'pointer'}}
+                    <Typography variant='h5' sx={{
+                        mt: '2vh',
+                        backgroundColor: 'gray',
+                        borderRadius: '1vh',
+                        pl: '1vh',
+                        cursor: 'pointer'
+                    }}
                                 onClick={() => setSizesOpen(prevState => !prevState)}>
-                        Tailles disponnibles</Typography>
+                        Tailles disponibles</Typography>
                     {sizesOpen &&
-                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh'}}>
+                        <Box
+                            sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', mt: '2vh'}}>
                             <Grid container spacing={3} justifyContent='center'>
-                                {JSON.parse(product.size).map((size, index) => (
+                                {product.sizes.map((size, index) => (
                                     <Grid key={index} item sx={{p: '1vh'}}>
                                         <Card sx={{pl: '1vh', pr: '1vh'}}>
-                                            {size}
+                                            {size.toUpperCase()}
                                         </Card>
                                     </Grid>
                                 ))}
                             </Grid>
                         </Box>}
 
-                    <Typography variant='h5' sx={{mt: '3vh', backgroundColor: 'gray', borderRadius: '1vh', pl: '1vh', cursor: 'pointer'}}
+                    <Typography variant='h5' sx={{
+                        mt: '3vh',
+                        backgroundColor: 'gray',
+                        borderRadius: '1vh',
+                        pl: '1vh',
+                        cursor: 'pointer'
+                    }}
                                 onClick={() => setMaterialsOpen(prevState => !prevState)}>Matériaux</Typography>
                     {materialsOpen &&
                         <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper', ml: '2vh'}}>
-                            {product.materials.split(', ').map((material) => (
+                            {product.materials !== '' && product.materials.split(', ').map((material) => (
                                 <ListItem
                                     key={material}
                                     disableGutters
@@ -195,7 +224,7 @@ export const PreviewCard = ({product, productIndex, toggleCard}) => {
                 justifyContent: 'center',
                 minWidth: '50vh'
             }}>
-                <ImageCarousel images={product.img} onClick={handleCarouselClick}/>
+                <ImageCarousel images={product.pictures} onClick={handleCarouselClick}/>
             </Grid>
             <Grid item xs={1}>
                 <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>

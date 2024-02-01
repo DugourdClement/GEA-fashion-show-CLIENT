@@ -283,6 +283,7 @@ const AddProduct = () => {
                     </Grid>
                     <TextField
                         type="file"
+                        required
                         inputProps={{multiple: true}}
                         onChange={handleImageChange}
                         variant="outlined"
