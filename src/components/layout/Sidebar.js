@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Drawer,
     List,
@@ -23,6 +23,23 @@ const navigationItems = [
 const drawerWidth = '51vh';
 
 const Sidebar = () => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const sidebarWidth = windowWidth < 800 ? "20vw" : "15vh";
+
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -32,15 +49,20 @@ const Sidebar = () => {
     };
 
     const navigationHandler = (target) => {
-        navigate(target)
         setOpen(false);
+
+        if (target === "/billeterie") {
+            window.location.href = "https://www.helloasso.com/associations/associationfenetres/evenements/place-defile-somebodylikeyou";
+        } else {
+            navigate(target);
+        }
     };
 
     return (
         <>
             <Card
                 sx={{
-                    width: '15vh',
+                    width: sidebarWidth,
                     height: '100vh',
                     position: 'fixed',
                     zIndex: 1,
@@ -60,20 +82,19 @@ const Sidebar = () => {
                             {!open ? <MenuIcon sx={{ color: "#fff" }} /> : <CloseIcon sx={{ color: "#fff" }} />}
                         </IconButton>
                     </Grid>
-                    <Grid item>
-                        {!open && <Typography
-                            sx={{
-                                fontSize: 35,
-                                color: "#fff",
-                                fontWeight: 'bold',
-                                writingMode: 'vertical-rl',
-                                transform: 'rotate(180deg)',
-                                fontFamily: "Cookie, cursive",
-                                mt: '20vh'
-                            }}>
-                            Somebody Like You
-                        </Typography>}
-                    </Grid>
+                    {!open && <Typography
+                        sx={{
+                            fontSize: 35,
+                            color: "#fff",
+                            fontWeight: 'bold',
+                            writingMode: 'vertical-rl',
+                            transform: 'rotate(180deg)',
+                            fontFamily: "Cookie, cursive",
+                            mt: '20vh',
+                            cursor: "default"
+                        }}>
+                        Somebody Like You
+                    </Typography>}
                 </Grid>
             </Card>
             <Drawer
@@ -92,7 +113,7 @@ const Sidebar = () => {
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         position: 'relative',
-                        left: open ? '15vh' : `-${drawerWidth}`,
+                        left: open ? sidebarWidth : `-${drawerWidth}`,
                         zIndex: 2,
                         boxSizing: 'border-box',
                         backgroundColor: '#333',

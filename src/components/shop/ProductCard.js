@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
     Box,
     Button,
@@ -54,9 +54,27 @@ export const IconLink = ({url, icon}) => {
 };
 
 export const ImageCarousel = ({
-                                  images, onClick = () => {
+    images, onClick = () => {
     }
-                              }) => {
+}) => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const carousselWidth = windowWidth < 1000 ? "80vw" : "450px";
+    const carousselHeight = windowWidth < 1000 ? "auto" : "300px";
+
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlePrev = () => {
@@ -72,20 +90,23 @@ export const ImageCarousel = ({
         console.log(activeIndex)
     };
 
+
+
     return (
-        <Box sx={{display: 'flex', alignItems: 'center'}} onClick={e => onClick(e)}>
+        <Box sx={{ display: 'flex', alignItems: 'center', width: carousselWidth, height: carousselHeight }} onClick={e => onClick(e)}>
             <Button onClick={handlePrev}>
-                <ArrowBackIosNewIcon/>
+                <ArrowBackIosNewIcon />
             </Button>
             <Card>
                 <CardMedia
+                    sx={{ width: "100%" }}
                     component="img"
                     image={images[activeIndex]}
                     alt={`Image ${activeIndex + 1}`}
                 />
             </Card>
             <Button onClick={handleNext}>
-                <ArrowForwardIosIcon/>
+                <ArrowForwardIosIcon />
             </Button>
         </Box>
     );
@@ -188,21 +209,22 @@ export const ExtendedProduct = ({product}) => {
                             ))}
                         </List>}
                 </Grid>
-            </Grid>
-            <Grid sx={{p: '2vh', pl: '7vh', pr: '7vh'}}>
-                <Typography variant='h5' sx={{mt: '5vh'}}>Description</Typography>
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                    <Typography variant="body1" sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
+            </Grid >
+            <Box sx={{ display: 'flex', flexDirection: "column", alignItems: 'center', height: '100%', padding: "20px" }}>
+                <Typography variant='h5' sx={{ mt: '5vh', fontFamily: "Roboto Condensed, sans-serif" }}>Description</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="body1" sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
                         {product.description}
                     </Typography>
                 </Box>
-            </Grid>
-            {product.history &&
-                <Grid sx={{p: '2vh', mb: '3vh', pl: '7vh', pr: '7vh'}}>
-                    <Typography variant='h5' sx={{mt: '2vh'}}>Histoire</Typography>
-                    <Box sx={{display: 'flex', alignItems: 'center', height: '100%'}}>
+            </Box>
+            {
+                product.history &&
+                <Grid sx={{ p: '2vh', mb: '3vh', pl: '7vh', pr: '7vh' }}>
+                    <Typography variant='h5' sx={{ mt: '2vh', fontFamily: "Roboto Condensed, sans-serif" }}>Histoire</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                         <Typography variant="body1"
-                                    sx={{wordWrap: 'break-word', overflow: 'hidden'}}>
+                            sx={{ wordWrap: 'break-word', overflow: 'hidden', fontFamily: "Roboto Condensed, sans-serif" }}>
                             {product.history}
                         </Typography>
                     </Box>
@@ -216,9 +238,26 @@ export const PreviewCard = ({product, productIndex, toggleCard}) => {
         event.stopPropagation();
     };
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const flexDirection = windowWidth < 1000 ? "column" : "row";
+    const dividerDisplay = windowWidth < 1000 ? "none" : "default";
+
     return (
-        <Grid container onClick={() => toggleCard(productIndex)} sx={{cursor: 'pointer',}}>
-            <Grid item xs={4} sx={{
+        <Box container onClick={() => toggleCard(productIndex)} sx={{ cursor: 'pointer', display: "flex", flexDirection: flexDirection, alignItems: "center" }}>
+            <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

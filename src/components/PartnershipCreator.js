@@ -29,6 +29,24 @@ const partnerData = [
 ];
 
 const PartnershipCreator = () => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const fontSize = windowWidth < 800 ? "12vw" : "6em";
+    const imgWidth = windowWidth < 800 ? "20vw" : "50%";
+
     return (
         <>
             <Box sx={{
@@ -39,7 +57,7 @@ const PartnershipCreator = () => {
                 alignItems: 'center'
             }}>
                 <Typography sx={{
-                    fontSize: "6em",
+                    fontSize: fontSize,
                     fontWeight: "300",
                     color: "#000",
                     lineHeight: "86px",
@@ -64,13 +82,13 @@ const PartnershipCreator = () => {
                             p: '3vh',
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-between',
+                            justifyContent: 'center',
                             alignItems: 'center',
                             width: '50vh',
                             height: '50vh'
                         }}
                     >
-                        <img src={partner.image} style={{height: '50%'}} alt={partner.name}/>
+                        <img src={partner.image} style={{ height: imgWidth }} alt={partner.name} />
                         <Typography
                             sx={{
                                 textAlign: 'center',

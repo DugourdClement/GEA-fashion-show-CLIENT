@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
     Alert,
     AlertTitle,
@@ -144,28 +144,29 @@ const Shop = () => {
     };
 
     return (
-        <Card sx={{maxWidth: '90%', margin: 'auto', mt: 5, mb: 5, p: '2vh', backgroundColor: 'gray'}}>
-            {products?.map((creator, index) =>
-                (<React.Fragment key={index}>
-                    <Typography variant="h4"
-                                sx={{p: '2vh'}}>{creator[1] ? creator[1] : creator[2] + ' ' + creator[3]}</Typography>
-                    {creator[4].map((product) => (
-                        <Card
-                            key={product.productId}
-                            sx={{
-                                mt: '2vh',
-                                mb: '2vh',
-                                p: '1vh',
-                                height: 'auto'
-                            }}>
-                            {(openCardIndex !== product.productId || openCardIndex === null) ?
-                                <PreviewCard product={product} productIndex={product.productId}  toggleCard={toggleCard}/>
-                                :
-                                <ExtendedProduct productIndex={product.productId} product={product}/>}
-                        </Card>
-                    ))}
-                </React.Fragment>))}
-            {error.status && <Alert severity="error">
+        <Card sx={{ maxWidth: '90%', margin: 'auto', mt: 5, mb: 5, p: '2vh', background: "#f7f7f7" }}>
+            {images.map((creator, index) =>
+            (<React.Fragment key={index}>
+                <Typography variant="h4" sx={{ p: '2vh', fontFamily: "Roboto Condensed, sans-serif" }}>{creator.creator}</Typography>
+                {creator.products.map((product) => (
+                    <Card
+                        key={product.id}
+                        sx={{
+                            mt: '2vh',
+                            mb: '2vh',
+                            p: '1vh',
+                            height: 'auto',
+
+                        }}>
+                        {(openCardIndex !== product.id || openCardIndex === null) ?
+                            <PreviewCard product={product} productIndex={product.id} image={product.image}
+                                toggleCard={toggleCard} />
+                            :
+                            <ExtendedProduct productIndex={product.id} product={product} />}
+                    </Card>
+                ))}
+            </React.Fragment>))}
+            {(error.email || error.password) && <Alert severity="error">
                 <AlertTitle>Erreur</AlertTitle>
                 {error.message}
             </Alert>}

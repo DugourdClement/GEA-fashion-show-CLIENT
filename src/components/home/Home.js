@@ -12,14 +12,37 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import imgHomeDefile from "../asset/imgHomeDefile.png"
 import flipper from "../asset/flipper.jpg"
 import imgHomePreparation from "../asset/imgHomePreparation.jpg"
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 
 const Home = () => {
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const fontSizeText = windowWidth < 800 ? "16px" : "20px";
+    const imgWidth = windowWidth < 800 ? "50vw" : "500px";
+    const mapWidth = windowWidth < 800 ? "70vw" : "100vh";
+    const mapHeight = windowWidth < 800 ? "90vw" : "100vh";
+    const bodyMargin = windowWidth < 800 ? "2vh 5vh" : "10vh 0";
+    const flexDirection = windowWidth < 800 ? "column" : "row";
+    const boxHeight = windowWidth < 800 ? "60vh" : "40vh";
 
     return (
         <Box sx={{
@@ -42,19 +65,17 @@ const Home = () => {
                 backgroundPosition: "center",
             }}>
                 <Typography sx={{
-                    fontSize: "6em",
+                    fontSize: "10vw",
                     color: "#fff",
                     fontWeight: "300",
-                    lineHeight: "86px",
                     fontFamily: "Cookie, cursive",
                 }}>
                     Défilé
                 </Typography>
                 <Typography sx={{
-                    fontSize: "7em",
+                    fontSize: "10vw",
                     color: "#fff",
                     fontWeight: "600",
-                    lineHeight: "66px",
                     fontFamily: "Cookie, cursive",
                 }}>
                     intergénérationnel
@@ -63,14 +84,14 @@ const Home = () => {
             <Box sx={{
                 width: "100%",
                 display: "flex",
-                margin: "10vh 0",
+                margin: bodyMargin,
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
             }}>
                 <Typography sx={{
                     textAlign: "center",
-                    fontSize: "20px",
+                    fontSize: fontSizeText,
                     fontFamily: "Roboto Condensed, sans-serif",
                     margin: "0 15vw"
                 }}>
@@ -99,7 +120,7 @@ const Home = () => {
             }}>
                 <Typography sx={{
                     textAlign: "center",
-                    fontSize: "20px",
+                    fontSize: fontSizeText,
                     fontWeight: "600",
                     color: "#F2E1C7",
                     fontFamily: "Roboto Condensed, sans-serif",
@@ -124,13 +145,13 @@ const Home = () => {
             }}>
                 <img
                     style={{
-                        width: "500px",
+                        width: imgWidth,
                         marginBottom: "40px"
                     }}
-                    src={imgHomePreparation}/>
+                    src={imgHomePreparation} />
                 <Typography sx={{
                     textAlign: "center",
-                    fontSize: "20px",
+                    fontSize: fontSizeText,
                     fontFamily: "Roboto Condensed, sans-serif",
                     margin: "0 20vw",
                 }}>
@@ -144,42 +165,52 @@ const Home = () => {
             </Box>
             <Box sx={{
                 width: "100%",
-                height: "40vh",
+                height: boxHeight,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 background: "#f7f7f7",
             }}>
-                <List sx={{width: '50vw', backgroundColor: '#fff'}}>
-                    <ListItem>
+                <List sx={{ width: '50vw', backgroundColor: '#fff' }}>
+                    <Box sx={{
+                        margin: "2vh",
+                        display: "flex",
+                        flexDirection: flexDirection,
+                        alignItems: "center"
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
-                                <LocationOnIcon/>
+                                <LocationOnIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{width: "80px"}} primary="Lieu" secondary="Espace Bargemon"/>
+                        <ListItemText sx={{ width: "80px" }} primary="Lieu" secondary="Espace Bargemon" />
                         <ListItemAvatar>
                             <Avatar>
-                                <DateRangeIcon/>
+                                <DateRangeIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{width: "80px"}} primary="Date" secondary="15 Mars"/>
-                    </ListItem>
-                    <ListItem>
+                        <ListItemText sx={{ width: "80px" }} primary="Date" secondary="15 Mars" />
+                    </Box>
+                    <Box sx={{
+                        margin: "2vh",
+                        display: "flex",
+                        flexDirection: flexDirection,
+                        alignItems: "center"
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
-                                <WatchLaterIcon/>
+                                <WatchLaterIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{width: "80px"}} primary="Début" secondary="18h30"/>
+                        <ListItemText sx={{ width: "80px" }} primary="Début" secondary="18h30" />
                         <ListItemAvatar>
                             <Avatar>
-                                <QueryBuilderIcon/>
+                                <QueryBuilderIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText sx={{width: "80px"}} primary="Fin" secondary="22h30"/>
-                    </ListItem>
+                        <ListItemText sx={{ width: "80px" }} primary="Fin" secondary="22h30" />
+                    </Box>
                 </List>
             </Box>
             <Box sx={{
@@ -200,14 +231,14 @@ const Home = () => {
                         fontFamily: "Roboto Condensed, sans-serif",
                     }}>
                     Plan d'accès</Typography>
-                <Card fullWidth sx={{height: '100vh', width: '100vh', mb: '5vh'}}>
+                <Card sx={{ height: mapHeight, width: mapWidth, mb: '5vh' }}>
                     <MapContainer center={[43.297042433176244, 5.370310174049631]} zoom={13} scrollWheelZoom={false}
-                                  style={{height: '100%', width: '100%', padding: '2vh'}}>
+                        style={{ height: '100%', width: '100%', padding: '2vh' }}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={[43.297042433176244, 5.370310174049631]}>
+                        <Marker position={[43.297042433176244, 5.370310174049631]} >
                             <Popup>
                                 Espace Bargemon, Marseille
                             </Popup>
