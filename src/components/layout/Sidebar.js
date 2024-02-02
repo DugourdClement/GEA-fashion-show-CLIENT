@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+    Box,
     Drawer,
     List,
     ListItemText,
@@ -10,6 +11,8 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
+import imgLogo from "../asset/logo.png"
+import somebodyLikeYou from "../asset/somebodyLikeYou.png"
 
 const navigationItems = [
     { path: "/qui-sommes-nous", label: "Qui sommes-nous ?" },
@@ -82,19 +85,22 @@ const Sidebar = () => {
                             {!open ? <MenuIcon sx={{ color: "#fff" }} /> : <CloseIcon sx={{ color: "#fff" }} />}
                         </IconButton>
                     </Grid>
-                    {!open && <Typography
-                        sx={{
-                            fontSize: 35,
-                            color: "#fff",
-                            fontWeight: 'bold',
-                            writingMode: 'vertical-rl',
-                            transform: 'rotate(180deg)',
-                            fontFamily: "Cookie, cursive",
-                            mt: '20vh',
-                            cursor: "default"
-                        }}>
-                        Somebody Like You
-                    </Typography>}
+                    {!open &&
+                        <Box>
+                            <img src={imgLogo} style={{ width: "50px", margin: "10px 0" }} />
+                            <Typography
+                                sx={{
+                                    fontSize: 35,
+                                    color: "#fff",
+                                    fontWeight: 'bold',
+                                    writingMode: 'vertical-rl',
+                                    transform: 'rotate(180deg)',
+                                    fontFamily: "Cookie, cursive",
+                                    cursor: "default"
+                                }}>
+                                Somebody Like You
+                            </Typography>
+                        </Box>}
                 </Grid>
             </Card>
             <Drawer
@@ -120,10 +126,7 @@ const Sidebar = () => {
                         boxShadow: 'none',
                     },
                 }}>
-                <Typography variant="h4" sx={{ color: "#fff", fontFamily: "Cookie, cursive", ml: '2vh', mt: '10vh', mb: '4vh', fontWeight: 'bold', cursor: 'pointer' }}
-                    onClick={() => navigationHandler("/accueil")}>
-                    Somebody Like You
-                </Typography>
+                <img src={somebodyLikeYou} style={{ margin: "10vh 0 4vh 2vh", width: "300px" }} onClick={() => navigationHandler("/accueil")} />
                 <List>
                     {navigationItems.map((item) => (
                         <ListItemButton
