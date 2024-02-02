@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react";
-import {Box, Card, CardMedia, Divider, Grid, Typography} from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Card, CardMedia, Divider, Grid, Typography } from "@mui/material";
 import domus from "../components/asset/domus.png";
 import associationFenetres from "../components/asset/associationFenetres.png";
 import lauralba from "../components/asset/lauralba.png";
@@ -14,19 +14,20 @@ import React from "react";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-import {IconLink} from "./shop/ProductCard";
-
+import { IconLink } from "./shop/ProductCard";
+import createur from "../components/asset/createur.png"
+import partenaire from "../components/asset/partenaire.png"
 
 const partnerData = [
-    {image: domus, name: 'Ehpad Domus Vi'},
-    {image: associationFenetres, name: 'Association FenêtreS'},
-    {image: lauralba, name: 'Lauralba'},
-    {image: lepopee, name: 'L\épopée'},
-    {image: medinsoft, name: 'Medinsoft'},
-    {image: olympicLocation, name: 'Olympic Location'},
-    {image: studioKaroDanse, name: 'Studio KA.RO Danse'},
-    {image: theCamp, name: 'The Camp'},
-    {image: iutInfoAix, name: 'IUT Informatique Aix-en-Provence'},
+    { image: domus, name: 'Ehpad Domus Vi' },
+    { image: associationFenetres, name: 'Association FenêtreS' },
+    { image: lauralba, name: 'Lauralba' },
+    { image: lepopee, name: 'L\épopée' },
+    { image: medinsoft, name: 'Medinsoft' },
+    { image: olympicLocation, name: 'Olympic Location' },
+    { image: studioKaroDanse, name: 'Studio KA.RO Danse' },
+    { image: theCamp, name: 'The Camp' },
+    { image: iutInfoAix, name: 'IUT Informatique Aix-en-Provence' },
 ];
 
 const PartnershipCreator = () => {
@@ -45,8 +46,11 @@ const PartnershipCreator = () => {
         };
     }, []);
 
-    const fontSize = windowWidth < 800 ? "12vw" : "6em";
+    const titleSize = windowWidth < 800 ? "150px" : "300px"
     const imgWidth = windowWidth < 800 ? "20vw" : "50%";
+    const fontSizeTitle = windowWidth < 800 ? "16px" : "30px";
+    const dividerDisplay = windowWidth < 800 ? "none" : "default";
+    const marginTitle = windowWidth < 800 ? "0" : "0 40px"
 
     return (
         <>
@@ -57,15 +61,7 @@ const PartnershipCreator = () => {
                 flexDirection: "column",
                 alignItems: 'center'
             }}>
-                <Typography sx={{
-                    fontSize: fontSize,
-                    fontWeight: "300",
-                    color: "#000",
-                    lineHeight: "86px",
-                    fontFamily: "Cookie, cursive",
-                }}>
-                    Partenaires
-                </Typography>
+                <img style={{ width: titleSize }} src={createur} />
             </Box>
             <Box sx={{
                 width: "100%",
@@ -110,39 +106,31 @@ const PartnershipCreator = () => {
                 flexDirection: "column",
                 alignItems: 'center'
             }}>
-                <Typography sx={{
-                    fontSize: "6em",
-                    fontWeight: "300",
-                    color: "#000",
-                    lineHeight: "86px",
-                    fontFamily: "Cookie, cursive",
-                }}>
-                    Créateurs
-                </Typography>
+                <img style={{ width: titleSize }} src={partenaire} />
             </Box>
-            <Card sx={{p: '2vh', mb: '3vh', ml: '7vh', mr: '7vh'}}>
-                <Grid container sx={{display: "flex", alignItems: 'center'}}>
-                    <Grid item sx={{ml: '4vh'}}>
-                        <Typography variant='h2'>1</Typography>
+            <Card sx={{ p: '2vh', mb: '3vh', ml: '7vh', mr: '7vh' }}>
+                <Grid container sx={{ display: "flex", flexDirection: "row", alignItems: 'center', justifyContent: 'center', flexWrap: "wrap" }}>
+                    <Grid item sx={{ ml: '4vh' }}>
+                        <Typography sx={{ fontSize: fontSizeTitle, margin: "0 40px" }}>1</Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <Box sx={{height: '100%', display: 'flex', justifyContent: 'center'}}>
-                            <Divider orientation="vertical" sx={{height: '50px', bgcolor: 'primary.main'}}/>
+                        <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
+                            <Divider orientation="vertical" sx={{ display: dividerDisplay, height: '50px', bgcolor: 'primary.main' }} />
                         </Box>
                     </Grid>
                     <Grid item xs={2}>
-                        <Typography
-                            variant='h5'>Lycéé La Calade</Typography>
+                        <Typography sx={{
+                            fontSize: fontSizeTitle,
+                            margin: marginTitle
+                        }}>Lycéé La Calade</Typography>
                     </Grid>
-                    <Grid item xs={1}>
-                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                            <Grid container justifyContent='space-around'>
-                                <IconLink url='instagram lien' icon={<InstagramIcon/>}/>
-                                <IconLink url='facebook lien' icon={<FacebookIcon/>}/>
-                                <IconLink url='pinterest lien' icon={<PinterestIcon/>}/>
-                            </Grid>
-                        </Box>
-                    </Grid>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: "20px" }}>
+                        <Grid container justifyContent='space-around'>
+                            <IconLink url='instagram lien' icon={<InstagramIcon />} />
+                            <IconLink url='facebook lien' icon={<FacebookIcon />} />
+                            <IconLink url='pinterest lien' icon={<PinterestIcon />} />
+                        </Grid>
+                    </Box>
                     <Grid item xs={7} sm={7}>
                         <CardMedia
                             sx={{

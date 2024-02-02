@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import logoQuiSommesNous from "../components/asset/logoQuiSommesNous.png"
 import previousEdition from "../components/asset/previousEdition.png"
 import React, { useState, useEffect } from 'react';
-
+import quiSommesNous from "../components/asset/quiSommesNous.png"
 
 const WhoAreWe = () => {
 
@@ -23,7 +23,7 @@ const WhoAreWe = () => {
     const flexDirection = windowWidth < 1300 ? "column" : "row";
     const titleMargin = windowWidth < 800 ? "5vw 20vw" : "5vh 30vh 10vh 20vh"
     const bodyMargin = windowWidth < 800 ? "0 5vh" : "5vh 30vh 10vh 20vh"
-    const titleSize = windowWidth < 800 ? "4em" : "6em"
+    const titleSize = windowWidth < 800 ? "200px" : "500px"
     const fontSizeText = windowWidth < 800 ? "16px" : "20px";
     const marginRight = windowWidth < 1300 ? "0" : "5vw"
     const imgWidth = windowWidth < 800 ? "50vw" : "300px";
@@ -41,14 +41,7 @@ const WhoAreWe = () => {
                 flexDirection: "column",
                 justifyContent: "center",
             }}>
-                <Typography sx={{
-                    fontSize: titleSize,
-                    fontWeight: "300",
-                    lineHeight: "86px",
-                    fontFamily: "Cookie, cursive",
-                }}>
-                    Qui sommes nous ?
-                </Typography>
+                <img style={{ width: titleSize }} src={quiSommesNous} />
             </Box>
             <Box sx={{
                 margin: bodyMargin,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Box,
     Typography,
-    List, ListItem,
+    List,
     ListItemText,
     ListItemAvatar,
     Avatar, Card,
@@ -10,6 +10,7 @@ import {
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import espaceBargemon from "../components/asset/espaceBargemon.jpg"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import organisation from "../components/asset/organisation.png"
 import L from "leaflet";
 import mapMarkerIcon from "./asset/mapmarker.png";
 
@@ -29,7 +30,7 @@ const EventDetails = () => {
         };
     }, []);
 
-    const titleSize = windowWidth < 800 ? "4em" : "6em";
+    const titleSize = windowWidth < 800 ? "200px" : "500px"
     const fontSizeText = windowWidth < 800 ? "16px" : "20px";
     const flexDirection = windowWidth < 1000 ? "column" : "row";
     const imgWidth = windowWidth < 1000 ? "50vw" : "400px";
@@ -56,16 +57,7 @@ const EventDetails = () => {
                 flexDirection: "column",
                 justifyContent: "center",
             }}>
-                <Typography sx={{
-                    margin: "0 15vw",
-                    fontSize: titleSize,
-                    fontWeight: "300",
-                    color: "#000",
-                    lineHeight: "86px",
-                    fontFamily: "Cookie, cursive",
-                }}>
-                    Organisation
-                </Typography>
+                <img style={{ width: titleSize }} src={organisation} />
             </Box>
             <Box sx={{
                 width: "100%",
