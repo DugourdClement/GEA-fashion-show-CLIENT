@@ -61,7 +61,7 @@ const PartnershipCreator = () => {
                 flexDirection: "column",
                 alignItems: 'center'
             }}>
-                <img style={{ width: titleSize }} src={createur} />
+                <img style={{ width: titleSize }} src={partenaire} />
             </Box>
             <Box sx={{
                 width: "100%",
@@ -106,7 +106,8 @@ const PartnershipCreator = () => {
                 flexDirection: "column",
                 alignItems: 'center'
             }}>
-                <img style={{ width: titleSize }} src={partenaire} />
+                <img style={{ width: titleSize }} src={createur} />
+
             </Box>
             <Card sx={{ p: '2vh', mb: '3vh', ml: '7vh', mr: '7vh' }}>
                 <Grid container sx={{ display: "flex", flexDirection: "row", alignItems: 'center', justifyContent: 'center', flexWrap: "wrap" }}>
