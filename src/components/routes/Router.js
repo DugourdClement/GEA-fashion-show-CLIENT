@@ -10,7 +10,6 @@ const WhoAreWe = lazy(() => import("../WhoAreWe"));
 const EventDetails = lazy(() => import("../EventDetails"));
 const PartnershipCreator = lazy(() => import("../PartnershipCreator"));
 const Shop = lazy(() => import("../shop/Shop"));
-const Tickets = lazy(() => import("../Tickets"));
 const AdminConsole = lazy(() => import("../admin/AdminConsole"));
 
 const ThemeRoutes = [
@@ -25,7 +24,6 @@ const ThemeRoutes = [
             { path: "organisation", exact: true, element: <EventDetails /> },
             { path: "partenariats&créateurs", exact: true, element: <PartnershipCreator /> },
             { path: "boutique", exact: true, element: <Shop /> },
-            { path: "admin", exact: true, element: <AdminConsole /> },
             {
                 path: "administration", exact: true, element: <SecuredRoute childrenName="Home" children={<AdminConsole />}></SecuredRoute>
             },
