@@ -2,7 +2,6 @@ import {
     Box,
     Typography,
     List,
-    ListItem,
     ListItemText,
     ListItemAvatar,
     Avatar,
@@ -18,6 +17,8 @@ import imgHomeDefile from "../asset/imgHomeDefile.png"
 import flipper from "../asset/flipper.jpg"
 import imgHomePreparation from "../asset/imgHomePreparation.jpg"
 import React, { useState, useEffect } from 'react';
+import L from 'leaflet';
+import mapMarkerIcon from "../asset/mapmarker.png";
 
 
 const Home = () => {
@@ -43,6 +44,11 @@ const Home = () => {
     const bodyMargin = windowWidth < 800 ? "2vh 5vh" : "10vh 0";
     const flexDirection = windowWidth < 800 ? "column" : "row";
     const boxHeight = windowWidth < 800 ? "60vh" : "40vh";
+
+    const customIcon = new L.Icon({
+        iconUrl: mapMarkerIcon,
+        iconSize: [32, 32],
+    });
 
     return (
         <Box sx={{
@@ -238,7 +244,7 @@ const Home = () => {
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={[43.297042433176244, 5.370310174049631]} >
+                        <Marker position={[43.297042433176244, 5.370310174049631]} icon={customIcon}>
                             <Popup>
                                 Espace Bargemon, Marseille
                             </Popup>
