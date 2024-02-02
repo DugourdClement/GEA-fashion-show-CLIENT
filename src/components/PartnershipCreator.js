@@ -122,7 +122,7 @@ const PartnershipCreator = () => {
                         <Typography sx={{
                             fontSize: fontSizeTitle,
                             margin: marginTitle
-                        }}>Lycéé La Calade</Typography>
+                        }}>Lycée La Calade</Typography>
                     </Grid>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: "20px" }}>
                         <Grid container justifyContent='space-around'>

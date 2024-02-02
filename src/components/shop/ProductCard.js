@@ -72,8 +72,6 @@ export const ImageCarousel = ({
         };
     }, []);
 
-    const carousselWidth = windowWidth < 800 ? "80vw" : "600px";
-    const carousselHeight = windowWidth < 800 ? "auto" : "300px";
     const buttonWidth = windowWidth < 800 ? "15px" : "50px";
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -93,7 +91,7 @@ export const ImageCarousel = ({
 
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', width: carousselWidth, height: carousselHeight }}
+        <Box sx={{ display: 'flex', alignItems: 'center'}}
             onClick={e => onClick(e)}>
             <Button sx={{ width: buttonWidth }} onClick={handlePrev}>
                 <ArrowBackIosNewIcon sx={{ width: 'inherit' }} />
